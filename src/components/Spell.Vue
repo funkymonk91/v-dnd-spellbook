@@ -1,12 +1,23 @@
 <template>
-  <div className="col-xs-12 col-md-6 col-lg-4 col-xl-3">
+  <div class="col-xs-12 col-md-6 col-lg-4 col-xl-3">
     <div class="card">
-      <div class="card-header">
+      
+      <div class="bookmark" v-show:bookmarked="bookmarked">
+        <div>
+          <i class="fa fa-star"></i>
+        </div>
+      </div>
 
+      <div class="card-header">
         <p class="spell-info text-muted">{{ spell.class }} <br> {{ spell.level }}</p>
         <h4 class="card-title">{{ spell.name }}</h4>
-        
-        <a href="#" class="btn btn-primary" v-on:click="expandSpell">Expand</a>
+
+        <button class="btn btn-primary" v-on:click="expandSpell" v-show:expanded="!expanded"><i class="fa fa-arrow-down"></i> Expand</button>
+        <button class="btn btn-primary" v-on:click="expandSpell" v-show:expanded="expanded"><i class="fa fa-arrow-up"></i> Collapse</button>
+
+        <button class="btn btn-success" v-show:bookmarked="!bookmarked" v-on:click="bookmarkSpell(spell)"><i class="fa fa-book"></i> Bookmark</button>
+        <button class="btn btn-danger" v-show:bookmarked="bookmarked" v-on:click="bookmarkSpell(spell)"><i class="fa fa-book"></i> Remove Bookmark</button>
+
       </div> <!-- /card-header -->
 
       <div class="card-block" v-show:expanded="expanded">
@@ -42,12 +53,24 @@ export default {
   methods: {
     expandSpell () {
       this.expanded = !this.expanded
+    },
+    bookmarkSpell (spell) {
+      this.bookmarked = !this.bookmarked
+      if(this.bookmarked) {
+        this.$emit('add-bookmark', spell)
+      }
+      else {
+        this.$emit('remove-bookmark', spell)
+      }
     }
   }
 }
 </script>
 
 <style lang="scss">
+  .card {
+    margin-bottom: 10px;
+  }
   .spell-info {
     font-style: italic;
     margin-bottom:0px;
@@ -61,9 +84,12 @@ export default {
 
   .bookmark {
       padding: 0 0 $ribbon-tail 0;
-      position: relative;
+      position: absolute;
       width: $ribbon-w;
       z-index: 2;
+      right: 0.25em;
+      top: -0.25em;
+
       div {
           background: $ribbon-bg;
           background: linear-gradient($ribbon-hl 0%, $ribbon-bg 100%);
