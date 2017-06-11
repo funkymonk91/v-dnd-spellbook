@@ -1,21 +1,53 @@
 <template>
   <div id="app">
-    <spellList v-bind:spells="spells"></spellList>
+    <navbar v-on:search-spells="searchSpells"></navbar>
+    <spellList v-bind:spells="filteredSpells"></spellList>
   </div>
 </template>
 
 <script>
 import spells from './data/spells.json'
+import Navbar from './components/Navbar'
 import SpellList from './components/SpellList'
 
 export default {
   name: 'app',
   components: {
+    Navbar,
     SpellList
   },
   data () {
     return {
-      spells: spells
+      spells: spells,
+      filteredSpells: spells
+    }
+  },
+  methods: {
+    searchSpells (searchQuery) {
+      searchQuery = searchQuery.toLowerCase()
+      console.log(searchQuery)
+      if(searchQuery !== '') {
+        var tempFilteredSpells = []
+        // Loop through all the spells
+        for (var i = 0; i < spells.length; i++) {
+          var spell = spells[i];
+          
+          // Spell props that we are comparing against
+          if(
+            spell.name.toLowerCase().indexOf(searchQuery) !== -1
+            || spell.level.indexOf(searchQuery) !== -1
+            || spell.school.toLowerCase().indexOf(searchQuery) !== -1
+            || spell.class.toLowerCase().indexOf(searchQuery) !== -1
+          ) {
+            tempFilteredSpells.push(spell)
+          }         
+        }
+
+        this.filteredSpells = tempFilteredSpells 
+      }
+      else {
+        this.filteredSpells = this.spells
+      }
     }
   }
 }

@@ -1,5 +1,7 @@
 <template>
   <div class="container-fluid">
+      <div v-if="spells.length === 0">:( No Spells found.</div>
+
       <spell v-for="(spell, index) in spells" v-bind:spell="spell" v-bind:key="index" v-bind:bookmarked="isSpellBookmarked(spell)" v-on:add-bookmark="addBookmark" v-on:remove-bookmark="removeBookmark"></spell>
   </div>
 </template>
@@ -23,7 +25,6 @@ export default {
   methods: {
     loadBookmarks () {
       if(localStorage['bookmarks'] !== undefined) {
-        console.log('loadBookmarks');
         this.bookmarks = JSON.parse(localStorage['bookmarks'])
       }
     },

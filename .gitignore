@@ -9,3 +9,4 @@ test/e2e/reports
 selenium-debug.log
 *.sublime-workspace
 README.md
+.vscode/launch.json

@@ -54,11 +54,11 @@ export default {
       this.expanded = !this.expanded
     },
     bookmarkSpell (spell) {
+      // If this isnt bookmarked (default)
       if(!this.bookmarked) {
         this.$emit('add-bookmark', spell)
       }
       else {
-        console.log(1)
         this.$emit('remove-bookmark', spell)
       }
     }
