@@ -41,13 +41,12 @@
   </div>
 </template>
 
-<script>
+<script defer>
 export default {
-  props: ['spell'],
+  props: ['spell', 'bookmarked'],
   data () {
     return {
-      expanded: false,
-      bookmarked: false
+      expanded: false
     }
   },
   methods: {
@@ -55,11 +54,11 @@ export default {
       this.expanded = !this.expanded
     },
     bookmarkSpell (spell) {
-      this.bookmarked = !this.bookmarked
-      if(this.bookmarked) {
+      if(!this.bookmarked) {
         this.$emit('add-bookmark', spell)
       }
       else {
+        console.log(1)
         this.$emit('remove-bookmark', spell)
       }
     }
