@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <navbar v-on:search-spells="searchSpells"></navbar>
-    <spellList v-bind:spells="filteredSpells"></spellList>
+    <navbar v-on:search-spells="searchSpells" v-on:filter-bookmarked="filterBookmarked"></navbar>
+    <spellList v-bind:spells="filteredSpells" v-bind:bookmarks="bookmarks"></spellList>
   </div>
 </template>
 
@@ -19,10 +19,20 @@ export default {
   data () {
     return {
       spells: spells,
-      filteredSpells: spells
+      filteredSpells: spells,
+      bookmarks: []
     }
   },
+  created: function () {
+   this.loadBookmarks()
+  },
   methods: {
+    loadBookmarks() {
+      if (localStorage['bookmarks'] !== undefined) {
+        console.log('loadBookmarks');
+        this.bookmarks = JSON.parse(localStorage['bookmarks'])
+      }
+    },
     searchSpells (searchQuery) {
       searchQuery = searchQuery.toLowerCase()
       console.log(searchQuery)
@@ -42,12 +52,14 @@ export default {
             tempFilteredSpells.push(spell)
           }         
         }
-
         this.filteredSpells = tempFilteredSpells 
       }
       else {
         this.filteredSpells = this.spells
       }
+    },
+    filterBookmarked () {
+      console.log('filter bookmarked')
     }
   }
 }
