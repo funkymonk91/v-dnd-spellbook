@@ -11,7 +11,8 @@
     <characterForm 
       v-if='mode === "character"'
       v-bind:characterClasses="characterClasses"
-      v-bind:characterRaces="characterRaces">
+      v-bind:characterRaces="characterRaces"
+      v-bind:characters="characters">
     </characterForm>
 
     <spellList 

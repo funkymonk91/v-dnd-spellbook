@@ -4,12 +4,12 @@
         <form>
             <div class="form-group">
                 <label for="">Character Name</label>
-                <input type="text" class="form-control" v-model:name="name">
+                <input type="text" class="form-control" v-model:character.name="character.name">
             </div>
 
             <div class="form-group">
                 <label for="">Select Race:</label>
-                <select class="form-control" v-model:aRace="aRace">
+                <select class="form-control" v-model:character.race="character.race">
                     <option value="" disabled selected></option>
                     <option v-for="aRace in characterRaces">{{ aRace.name }}</option>
                 </select>
@@ -17,7 +17,7 @@
 
             <div class="form-group" v-if="subRaces.length > 0">
                 <label for="">Select Sub Race:</label>
-                <select class="form-control" v-model:aSubRace="aSubRace">
+                <select class="form-control" v-model:character.subRace="character.subRace">
                     <option value="" disabled selected></option>
                     <option v-for="sRace in subRaces">{{ sRace.name }}</option>
                 </select>
@@ -25,16 +25,26 @@
 
             <div class="form-group">
                 <label for="">Select Class:</label>
-                <select class="form-control" v-model:aClass="aClass">
+                <select class="form-control" v-model:character.class="character.class">
                     <option value="" disabled selected></option>
                     <option v-for="aClass in characterClasses">{{ aClass.name }}</option>
                 </select>
             </div>
 
-            <div class="form-group" v-if="spellCastingStat !== ''">
-                <label for="">{{ spellCastingStat }} Score</label>
-                <input type="number" class="form-control" v-model:spellCastingScore="spellCastingScore">
+            <div class="form-group">
+                <label for="">Level:</label>
+                <select name="" id="" class="form-control" v-model:character.classLevel="character.classLevel">
+                    <option value="" disabled selected></option>
+                    <option v-for="n in 20">{{ n }}</option>
+                </select>
             </div>
+
+            <div class="form-group" v-if="character.spellCastingStat !== '' && character.class !== ''">
+                <label for="">{{ spellCastingStat }} Score:</label>
+                <input type="number" class="form-control" v-model:character.spellCastingScore="character.spellCastingScore">
+            </div>
+
+            <button class="btn btn-primary" v-on:click.prevent="saveCharacter"><i class="fa fa-save"></i> Save Character</button>
         </form>
 
     </div>
@@ -42,14 +52,17 @@
 
 <script>
 export default {
-    props: ['characterClasses', 'characterRaces'],
+    props: ['characterClasses', 'characterRaces', 'characters'],
     data () {
         return {
-            name: '',
-            aRace: '',
-            aSubRace: '',
-            aClass: '',
-            spellCastingScore: 0
+            character: {
+                name: '',
+                race: '',
+                subRace: '',
+                class: '',
+                classLevel: '1',
+                spellCastingScore: 0
+            }
         }
     },
     computed: {
@@ -57,7 +70,7 @@ export default {
             for (var i = 0; i < this.characterRaces.length; i++) {
                 var race = this.characterRaces[i]
                 
-                if(this.aRace === race.name && race.sub_races.length > 0) {
+                if(this.character.race === race.name && race.sub_races.length > 0) {
                     return race.sub_races
                 }
             }
@@ -66,10 +79,17 @@ export default {
         },
         spellCastingStat: function() {
             for (var i = 0; i < this.characterClasses.length; i++) {
-                if(this.aClass === this.characterClasses[i].name) {
+                if(this.character.class === this.characterClasses[i].name) {
                     return this.characterClasses[i].spell_casting_stat
                 }
             }
+            
+            return ''
+        }
+    },
+    methods: {
+        saveCharacter () {
+            this.characters.push(this.character)
         }
     }
 }
