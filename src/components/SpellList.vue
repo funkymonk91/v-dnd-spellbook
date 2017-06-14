@@ -16,10 +16,6 @@ import Spell from './Spell'
 
 export default {
   props: ['spells', 'bookmarks'],
-  data () {
-    return {
-    }
-  },
   components: {
     Spell
   },

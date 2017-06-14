@@ -1,0 +1,55 @@
+[
+    {
+        "name": "Dwarf",
+        "sub_races": [
+            {
+                "name": "Mountain Dwarf"
+            },
+            {
+                "name": "Hill Dwarf"
+            }
+        ]
+    },
+    {
+        "name": "Elf",
+        "sub_races": [
+            {
+                "name": "High Elf"
+            },
+            {
+                "name": "Wood Elf"
+            },
+            {
+                "name": "Drow"
+            }
+        ]
+    },
+    {
+        "name": "Halfling",
+        "sub_races": []
+    },
+    {
+        "name": "Dragonborn",
+        "sub_races": []
+    },
+    {
+        "name": "Human",
+        "sub_races": []
+    },
+    {
+        "name": "Gnome",
+        "sub_races": []
+    },
+    {
+        "name": "Half-Elf",
+        "sub_races": []
+    },
+    {
+        "name": "Half-Orc",
+        "sub_races": []
+    },
+    {
+        "name": "Tiefling",
+        "sub_races": []
+    }
+]

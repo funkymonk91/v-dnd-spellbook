@@ -1,0 +1,62 @@
+[
+    {
+        "name": "Barbarian",
+        "spell_casting_stat": "",
+        "sub_classes": []
+    },
+    {
+        "name": "Bard",
+        "spell_casting_stat": "CHA",
+        "sub_classes": []
+    },
+    {
+        "name": "Cleric",
+        "spell_casting_stat": "WIS",
+        "sub_classes": []
+    },
+    {
+        "name": "Druid",
+        "spell_casting_stat": "WIS",
+        "sub_classes": []
+    },
+    {
+        "name": "Fighter",
+        "spell_casting_stat": "INT",
+        "sub_classes": []
+    },
+    {
+        "name": "Monk",
+        "spell_casting_stat": "WIS",
+        "sub_classes": []
+    },
+    {
+        "name": "Paladin",
+        "spell_casting_stat": "CHA",
+        "sub_classes": []
+    },
+    {
+        "name": "Ranger",
+        "spell_casting_stat": "WIS",
+        "sub_classes": []
+    },
+    {
+        "name": "Rogue",
+        "spell_casting_stat": "INT",
+        "sub_classes": []
+    },
+    {
+        "name": "Sorcerer",
+        "spell_casting_stat": "CHA",
+        "sub_classes": []
+    },
+    {
+        "name": "Warlock",
+        "spell_casting_stat": "CHA",
+        "sub_classes": []
+    },
+    {
+        "name": "Wizard",
+        "spell_casting_stat": "INT",
+        "sub_classes": []
+    }
+]
