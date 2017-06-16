@@ -5,19 +5,19 @@
           <p>:( No Spells found</p>
         </div>
 
-        <spell v-for="(spell, index) in spells" v-bind:spell="spell" v-bind:key="index" v-bind:bookmarked="isSpellBookmarked(spell)" v-on:add-bookmark="addBookmark" v-on:remove-bookmark="removeBookmark"></spell>
+        <spellListItem v-for="(spell, index) in spells" v-bind:spell="spell" v-bind:key="index" v-bind:bookmarked="isSpellBookmarked(spell)" v-on:add-bookmark="addBookmark" v-on:remove-bookmark="removeBookmark"></spellListItem>
 
       </div>
   </div>
 </template>
 
 <script>
-import Spell from './Spell'
+import SpellListItem from './SpellListItem'
 
 export default {
   props: ['spells', 'bookmarks'],
   components: {
-    Spell
+    SpellListItem
   },
   methods: {
     isSpellBookmarked (spell) {

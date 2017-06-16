@@ -52,7 +52,7 @@
 
 <script>
 export default {
-    props: ['characterClasses', 'characterRaces', 'characters'],
+    props: ['characterClasses', 'characterRaces', 'characters', 'character'],
     data () {
         return {
             character: {
@@ -61,7 +61,10 @@ export default {
                 subRace: '',
                 class: '',
                 classLevel: '1',
-                spellCastingScore: 0
+                spellCastingScore: 0,
+                newCharacter: true,
+                spellBook: [],
+                prepared: []
             }
         }
     },
@@ -77,7 +80,7 @@ export default {
 
             return []
         },
-        spellCastingStat: function() {
+        spellCastingStat: function () {
             for (var i = 0; i < this.characterClasses.length; i++) {
                 if(this.character.class === this.characterClasses[i].name) {
                     return this.characterClasses[i].spell_casting_stat
@@ -85,11 +88,34 @@ export default {
             }
             
             return ''
+        },
+        characterId: function () {
+            // Determine the characterId for when it comes time to save
+            // New character - count + 1.
+            if(this.character.newCharacter) {
+                return this.characters.length + 1
+            }
+            // Otherwise, find index of current character
+            else {
+                for (var i = 0; i < this.characters.length; i++) {
+                    if(this.character === this.characters[i]) {
+                        return i
+                    }                    
+                }
+            }
         }
     },
     methods: {
         saveCharacter () {
-            this.characters.push(this.character)
+            if (this.character.newCharacter) {
+                this.character.newCharacter = false
+                this.characters.push(this.character)
+            }
+            else {
+                this.characters[this.characterId] = this.character
+            }
+
+            localStorage.setItem('characters', JSON.stringify(this.characters))
         }
     }
 }

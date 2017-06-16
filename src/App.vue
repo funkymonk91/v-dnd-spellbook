@@ -8,17 +8,27 @@
       v-bind:mode="mode">
     </navbar>
 
-    <characterForm 
-      v-if='mode === "character"'
+    <characterList 
+      v-if='mode === "characterList"'
+      v-on:create-character="createCharacter"
+      v-on:edit-character="editCharacter"
       v-bind:characterClasses="characterClasses"
       v-bind:characterRaces="characterRaces"
       v-bind:characters="characters">
+    </characterList>
+
+    <characterForm 
+      v-if='mode === "createCharacter"'
+      v-bind:characterClasses="characterClasses"
+      v-bind:characterRaces="characterRaces"
+      v-bind:characters="characters"
+      v-bind:character="character">
     </characterForm>
 
     <spellList 
+      v-if="mode === 'spells'"
       v-bind:spells="filteredSpells" 
-      v-bind:bookmarks="bookmarks" 
-      v-if="mode === 'spells'">
+      v-bind:bookmarks="bookmarks">
     </spellList>
 
   </div>
@@ -30,6 +40,7 @@ import characterClasses from './data/classes.json'
 import characterRaces from './data/races.json'
 import Navbar from './components/Navbar'
 import SpellList from './components/SpellList'
+import CharacterList from './components/CharacterList'
 import CharacterForm from './components/CharacterForm'
 
 export default {
@@ -37,26 +48,34 @@ export default {
   components: {
     Navbar,
     SpellList,
+    CharacterList,
     CharacterForm
   },
   data () {
     return {
-      mode: "character",
+      mode: "characterList",
       spells: spells,
       filteredSpells: spells,
       characterClasses: characterClasses,
       characterRaces: characterRaces,
       bookmarks: [],
+      character: {},
       characters: []
     }
   },
   created: function () {
     this.loadBookmarks()
+    this.loadCharacters()
   },
   methods: {
     loadBookmarks() {
       if (localStorage['bookmarks'] !== undefined) {
         this.bookmarks = JSON.parse(localStorage['bookmarks'])
+      }
+    },
+    loadCharacters () {
+      if (localStorage['characters'] !== undefined) {
+        this.characters = JSON.parse(localStorage['characters'])
       }
     },
     searchSpells (searchQuery) {
@@ -103,7 +122,13 @@ export default {
       this.mode = 'spells'
     },
     showCharacters () {
-      this.mode = "character"
+      this.mode = "characterList"
+    },
+    createCharacter () {
+      this.mode = "createCharacter"
+    },
+    editCharacter () {
+      this.mode = "createCharacter"
     }
   }
 }
