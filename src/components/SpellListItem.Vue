@@ -17,7 +17,6 @@
 
         <button class="btn btn-success" v-show:bookmarked="!bookmarked" v-on:click="bookmarkSpell(spell)"><i class="fa fa-book"></i> Bookmark</button>
         <button class="btn btn-danger" v-show:bookmarked="bookmarked" v-on:click="bookmarkSpell(spell)"><i class="fa fa-book"></i> Remove Bookmark</button>
-
       </div> <!-- /card-header -->
 
       <div class="card-block" v-show:expanded="expanded">
@@ -43,7 +42,7 @@
 
 <script defer>
 export default {
-  props: ['spell', 'bookmarked'],
+  props: ['bookmarked', 'spell'],
   data () {
     return {
       expanded: false
@@ -56,10 +55,10 @@ export default {
     bookmarkSpell (spell) {
       // If this isnt bookmarked (default)
       if(!this.bookmarked) {
-        this.$emit('add-bookmark', spell)
+        this.$store.dispatch('addBookmark', spell)
       }
       else {
-        this.$emit('remove-bookmark', spell)
+        this.$store.dispatch('removeBookmark', spell)
       }
     }
   }

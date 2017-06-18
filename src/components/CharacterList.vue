@@ -13,13 +13,13 @@
             <tbody class="table-striped table-hover">
                 <characterListItem 
                     v-for="(character, index) in characters" 
-                    v-on:click.native="$emit('edit-character', character)"
+                    v-on:click.native="editCharacter(character.id)"
                     v-bind:character="character" 
                     v-bind:key="index"></characterListItem>
             </tbody>
         </table>
 
-        <button class="btn btn-success" v-on:click="$emit('create-character')"><i class="fa fa-plus"></i> Create New Character</button> 
+        <button class="btn btn-success" v-on:click="$store.dispatch('createCharacter')"><i class="fa fa-plus"></i> Create New Character</button> 
     </div>
 </template>
 
@@ -27,38 +27,21 @@
 import CharacterListItem from './CharacterListItem.vue'
 
 export default {
-    props: ['characterClasses', 'characterRaces', 'characters', 'mode'],
     components: {
         CharacterListItem
     },
-    data () {
-        return {
-            character: {
-                name: '',
-                race: '',
-                subRace: '',
-                class: '',
-                classLevel: '1',
-                spellCastingScore: 0,
-                newCharacter: true,
-                spellBook: [],
-                prepared: []
-            }
-        }
-    },
     computed: {
-        spellCastingStat: function () {
-            for (var i = 0; i < this.characterClasses.length; i++) {
-                if(this.character.class === this.characterClasses[i].name) {
-                    return this.characterClasses[i].spell_casting_stat
-                }
-            }
-            
-            return ''
+        characters: function () {
+            return this.$store.getters.characters
         }
     },
     methods: {
-
+        createCharacter: function () {
+            this.$store.dispatch('createCharacter')
+        },
+        editCharacter: function (id) {
+            this.$store.dispatch('editCharacter', id)
+        }
     }
 }
 </script>

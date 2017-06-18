@@ -5,8 +5,7 @@
           <p>:( No Spells found</p>
         </div>
 
-        <spellListItem v-for="(spell, index) in spells" v-bind:spell="spell" v-bind:key="index" v-bind:bookmarked="isSpellBookmarked(spell)" v-on:add-bookmark="addBookmark" v-on:remove-bookmark="removeBookmark"></spellListItem>
-
+        <spellListItem v-for="(spell, index) in spells" :key="index" :spell="spell" :bookmarked="isSpellBookmarked(spell)"></spellListItem>
       </div>
   </div>
 </template>
@@ -15,26 +14,19 @@
 import SpellListItem from './SpellListItem'
 
 export default {
-  props: ['spells', 'bookmarks'],
   components: {
     SpellListItem
   },
+  computed: {
+    spells: function() {
+      return this.$store.getters.filteredSpells
+    }
+  },
   methods: {
     isSpellBookmarked (spell) {
-      const index = this.bookmarks.indexOf(spell.name)
+      const index = this.$store.getters.bookmarks.indexOf(spell.name)
       const returnVal = (index !== -1) ? true : false
       return returnVal
-    },
-    addBookmark(spell) {
-      this.bookmarks.push(spell.name)
-      // Persist the bookmarks
-      localStorage.setItem('bookmarks', JSON.stringify(this.bookmarks))
-    },
-    removeBookmark(spell) {
-      const index = this.bookmarks.indexOf(spell.name)
-      this.bookmarks.splice(index, 1)
-      // Persist the bookmarks
-      localStorage.setItem('bookmarks', JSON.stringify(this.bookmarks))
     }
   }
 }
