@@ -97,14 +97,27 @@ export const store = new Vuex.Store({
             }
         },
         addBookmark (state, spell) {
-            state.bookmarks.push(spell.name)
-            localStorage.setItem('bookmarks', JSON.stringify(state.bookmarks))
+            if(state.currentCharacter.id === '') {
+                state.bookmarks.push(spell.name)
+                localStorage.setItem('bookmarks', JSON.stringify(state.bookmarks))
+            }
+            else {
+                state.currentCharacter.spellBook.push(spell.name)
+                store.dispatch('saveCharacter')
+            }
         },
         removeBookmark(state, spell) {
-            const index = state.bookmarks.indexOf(spell.name)
-            state.bookmarks.splice(index, 1)
-            // Persist the bookmarks
-            localStorage.setItem('bookmarks', JSON.stringify(state.bookmarks))
+            if(state.currentCharacter.id === '') {
+                const index = state.bookmarks.indexOf(spell.name)
+                state.bookmarks.splice(index, 1)
+                // Persist the bookmarks
+                localStorage.setItem('bookmarks', JSON.stringify(state.bookmarks))
+            }
+            else {
+                const index = state.currentCharacter.spellBook.indexOf(spell.name)
+                state.currentCharacter.spellBook.splice(index, 1)
+                store.dispatch('saveCharacter')
+            }
         },
         changeMode (state, mode) {
             state.mode = mode
@@ -122,9 +135,16 @@ export const store = new Vuex.Store({
             for (var i = 0; i < state.spells.length; i++) {
                 var spell = state.spells[i];
 
-                // Spell props that we are comparing against
-                if (state.bookmarks.indexOf(spell.name) !== -1) {
-                    tempFilteredSpells.push(spell)
+                if(state.currentCharacter.id === '') {
+                    // Spell props that we are comparing against
+                    if (state.bookmarks.indexOf(spell.name) !== -1) {
+                        tempFilteredSpells.push(spell)
+                    }
+                }
+                else {
+                    if(state.currentCharacter.spellBook.indexOf(spell.name) !== -1) {
+                        tempFilteredSpells.push(spell)
+                    }
                 }
             }
             state.filteredSpells = tempFilteredSpells
@@ -157,7 +177,6 @@ export const store = new Vuex.Store({
             }
 
             localStorage.setItem('characters', JSON.stringify(state.characters))
-            state.mode = 'characterList'
         },
         createCharacter (state, id) {
             state.currentCharacter = {

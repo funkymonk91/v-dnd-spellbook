@@ -38,7 +38,17 @@
     },
     {
         "name": "Gnome",
-        "sub_races": []
+        "sub_races": [
+            {
+                "name": "Wood Gnome"
+            },
+            {
+                "name": "Rock Gnome"
+            },
+            {
+                "name": "Deep Gnome (Svirfneblin)"
+            }
+        ]
     },
     {
         "name": "Half-Elf",
@@ -50,6 +60,79 @@
     },
     {
         "name": "Tiefling",
+        "sub_races": []
+    },
+    {
+        "name": "Kenku",
+        "sub_races": []
+    },
+    {
+        "name": "Tabaxi",
+        "sub_races": []
+    },
+    {
+        "name": "Aasimar",
+        "sub_races": []
+    },
+    {
+        "name": "Lizardfolk",
+        "sub_races": []
+    },
+    {
+        "name": "Triton",
+        "sub_races": []
+    },
+    {
+        "name": "Goliath",
+        "sub_races": []
+    },
+    {
+        "name": "Firbolg",
+        "sub_races": []
+    },
+    {
+        "name": "Orc",
+        "sub_races": []
+    },
+    {
+        "name": "Goblin",
+        "sub_races": []
+    },
+    {
+        "name": "Bugbear",
+        "sub_races": []
+    },
+    {
+        "name": "Kobold",
+        "sub_races": []
+    },
+    {
+        "name": "Hobgoblin",
+        "sub_races": []
+    },
+    {
+        "name": "Yuan-ti Pureblood",
+        "sub_races": []
+    },
+    {
+        "name": "Genasi",
+        "sub_races": [
+            {
+                "name": "Fire Genasi"
+            },
+            {
+                "name": "Water Genasi"
+            },
+            {
+                "name": "Eath Genasi"
+            },
+            {
+                "name": "Air Genasi"
+            }
+        ]
+    },
+    {
+        "name": "Aarakocra",
         "sub_races": []
     }
 ]

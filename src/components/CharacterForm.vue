@@ -63,6 +63,7 @@ export default {
     methods: {
         saveCharacter () {
             this.$store.dispatch('saveCharacter')
+            this.showCharacters()
         },
         showCharacters () {
             this.$store.dispatch('changeMode', 'characterList')

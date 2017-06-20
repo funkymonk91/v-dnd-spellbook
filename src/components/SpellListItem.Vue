@@ -12,11 +12,11 @@
         <p class="spell-info text-muted">{{ spell.class }} <br> {{ spell.level }}</p>
         <h4 class="card-title">{{ spell.name }}</h4>
 
-        <button class="btn btn-primary" v-on:click="expandSpell" v-show:expanded="!expanded"><i class="fa fa-arrow-down"></i> Expand</button>
-        <button class="btn btn-primary" v-on:click="expandSpell" v-show:expanded="expanded"><i class="fa fa-arrow-up"></i> Collapse</button>
+        <button class="btn btn-primary" @click="expandSpell" v-show:expanded="!expanded"><i class="fa fa-arrow-down"></i> Expand</button>
+        <button class="btn btn-primary" @click="expandSpell" v-show:expanded="expanded"><i class="fa fa-arrow-up"></i> Collapse</button>
 
-        <button class="btn btn-success" v-show:bookmarked="!bookmarked" v-on:click="bookmarkSpell(spell)"><i class="fa fa-book"></i> Bookmark</button>
-        <button class="btn btn-danger" v-show:bookmarked="bookmarked" v-on:click="bookmarkSpell(spell)"><i class="fa fa-book"></i> Remove Bookmark</button>
+        <button class="btn btn-success" v-show:bookmarked="!bookmarked" @click="bookmarkSpell(spell)"><i class="fa fa-book"></i> Bookmark</button>
+        <button class="btn btn-danger" v-show:bookmarked="bookmarked" @click="bookmarkSpell(spell)"><i class="fa fa-book"></i> Remove Bookmark</button>
       </div> <!-- /card-header -->
 
       <div class="card-block" v-show:expanded="expanded">

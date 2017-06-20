@@ -24,17 +24,13 @@ export default {
   },
   methods: {
     isSpellBookmarked (spell) {
-      const index = this.$store.getters.bookmarks.indexOf(spell.name)
-      const returnVal = (index !== -1) ? true : false
-      return returnVal
+      const index = (this.$store.getters.currentCharacter.id === '') ? this.$store.getters.bookmarks.indexOf(spell.name) : this.$store.getters.currentCharacter.spellBook.indexOf(spell.name)
+      return (index !== -1) ? true : false
     }
   }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
-  button {
-    cursor: pointer;
-  }
+
 </style>
