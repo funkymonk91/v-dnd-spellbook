@@ -1,26 +1,19 @@
 <template>
-  <div class="col-xs-12 col-md-6 col-lg-4 col-xl-3">
-    <div class="card">
-      
-      <div class="bookmark" v-show:bookmarked="bookmarked">
-        <div>
-          <i class="fa fa-star"></i>
-        </div>
-      </div>
-
-      <div class="card-header">
-        <p class="spell-info text-muted">{{ spell.class }} <br> {{ spell.level }}</p>
-        <h4 class="card-title">{{ spell.name }}</h4>
-
+  <tr :class="{ 'table-info': bookmarked }">
+    <td><i class="fa fa-star" v-show:bookmarked="bookmarked"></i> {{ spell.name }}</td>
+    <td>{{ spell.class }}</td>
+    <td>{{ spell.level }}</td>
+    <td>
         <button class="btn btn-primary" @click="expandSpell" v-show:expanded="!expanded"><i class="fa fa-arrow-down"></i> Expand</button>
         <button class="btn btn-primary" @click="expandSpell" v-show:expanded="expanded"><i class="fa fa-arrow-up"></i> Collapse</button>
 
         <button class="btn btn-success" v-show:bookmarked="!bookmarked" @click="bookmarkSpell(spell)"><i class="fa fa-book"></i> Bookmark</button>
         <button class="btn btn-danger" v-show:bookmarked="bookmarked" @click="bookmarkSpell(spell)"><i class="fa fa-book"></i> Remove Bookmark</button>
-      </div> <!-- /card-header -->
-
-      <div class="card-block" v-show:expanded="expanded">
-        <table class="table text-muted">
+    </td>
+  </tr>
+  <!--<tr v-show:expanded="expanded">
+    <td>
+      <table class="table text-muted">
           <tr>
             <td>Cast Time: <br> {{ spell.casting_time }}</td>
             <td>Components: <br> {{ spell.components }}</td>
@@ -35,9 +28,8 @@
           </tr>
         </table>
         <p class="card-text">{{ spell.desc }}</p>
-      </div> <!-- /card-block -->
-    </div> <!-- /card -->
-  </div>
+    </td>
+  </tr>-->
 </template>
 
 <script defer>
