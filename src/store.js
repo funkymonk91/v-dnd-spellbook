@@ -157,6 +157,7 @@ export const store = new Vuex.Store({
             }
 
             localStorage.setItem('characters', JSON.stringify(state.characters))
+            state.mode = 'characterList'
         },
         createCharacter (state, id) {
             state.currentCharacter = {
@@ -181,6 +182,24 @@ export const store = new Vuex.Store({
                     break
                 }
             }
+        },
+        setCurrentCharacter (state, character) {
+            state.currentCharacter = character
+        },
+        deleteCharacter (state, characterId) {
+            for (var i = 0; i < state.characters.length; i++) {
+                if(characterId === state.characters[i].id) {
+                    state.characters.splice(i, 1)
+                    break
+                }
+            }
+            
+            if(state.currentCharacter.id === characterId) {
+                state.currentCharacter = {}
+            }
+
+            localStorage.setItem('characters', JSON.stringify(state.characters))
+            state.mode = 'characterList'
         }
     },
     actions: {
@@ -210,6 +229,12 @@ export const store = new Vuex.Store({
         },
         editCharacter (context, id) {
             context.commit('editCharacter', id)
+        },
+        setCurrentCharacter (context, character) {
+            context.commit('setCurrentCharacter', character)
+        },
+        deleteCharacter (context, characterId) {
+            context.commit('deleteCharacter', characterId)
         }
     }
 })

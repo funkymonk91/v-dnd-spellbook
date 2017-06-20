@@ -1,6 +1,6 @@
 <template>
     <nav class="navbar navbar-inverse bg-inverse">
-        <a class="navbar-brand" href="#">Spellbook</a>
+        <a class="navbar-brand" href="#"><span v-if="$store.state.currentCharacter.id !== ''">{{ $store.state.currentCharacter.name }}'s </span>Spellbook</a>
 
         <a href="#" v-on:click.prevent="showCharacters">Characters</a>
         <a href="#" v-on:click.prevent="showBookmarked">Bookmarked</a>

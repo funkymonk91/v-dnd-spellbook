@@ -44,7 +44,10 @@
                 <input type="number" class="form-control" v-model="character.spellCastingScore">
             </div>
 
-            <button class="btn btn-primary" v-on:click.prevent="saveCharacter"><i class="fa fa-save"></i> Save Character</button>
+            <button class="btn btn-danger" @click.prevent="showCharacters"><i class="fa fa-times"></i> Cancel</button>
+            <button class="btn btn-primary" @click.prevent="saveCharacter"><i class="fa fa-save"></i> Save Character</button>
+
+            <button class="btn btn-danger pull-right" v-if="character.id !== ''" @click.prevent="deleteCharacter(character.id)"><i class="fa fa-trash fa-lg"></i></button>
         </form>
 
     </div>
@@ -60,6 +63,12 @@ export default {
     methods: {
         saveCharacter () {
             this.$store.dispatch('saveCharacter')
+        },
+        showCharacters () {
+            this.$store.dispatch('changeMode', 'characterList')
+        },
+        deleteCharacter (characterId) {
+            this.$store.dispatch('deleteCharacter', characterId)
         }
     }
 }

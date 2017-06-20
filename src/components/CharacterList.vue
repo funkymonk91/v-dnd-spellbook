@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container-fluid">
         <h2><i class="fa fa-users"></i> Characters</h2>
         <table class="table table-bordered">
             <thead class="thead-inverse">
@@ -8,14 +8,17 @@
                     <th>Race</th>
                     <th>Class</th>
                     <th>Level</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody class="table-striped table-hover">
                 <characterListItem 
                     v-for="(character, index) in characters" 
-                    v-on:click.native="editCharacter(character.id)"
                     v-bind:character="character" 
                     v-bind:key="index"></characterListItem>
+                <tr v-if="characters.length === 0">
+                    <td colspan="5" class="text-center">No Characters Found :(</td>
+                </tr>
             </tbody>
         </table>
 
@@ -38,9 +41,6 @@ export default {
     methods: {
         createCharacter: function () {
             this.$store.dispatch('createCharacter')
-        },
-        editCharacter: function (id) {
-            this.$store.dispatch('editCharacter', id)
         }
     }
 }
