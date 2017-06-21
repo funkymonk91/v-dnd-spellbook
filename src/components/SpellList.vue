@@ -1,24 +1,26 @@
 <template>
   <div class="container-fluid">
-      <div class="row">
-        <div class="col-xs-12" v-if="spells.length === 0">
-          <p>:( No Spells found</p>
-        </div>
+
 
         <table class="table">
-          <thead>
+          <!--<thead>
             <tr>
               <th>Name</th>
               <th>Class</th>
               <th>Level</th>
               <th></th>
             </tr>
-          </thead>
+          </thead>-->
           <tbody>
             <spellListItem v-for="(spell, index) in spells" :key="index" :spell="spell" :bookmarked="isSpellBookmarked(spell)"></spellListItem>
+
+            <tr v-if="spells.length === 0">
+              <td class="text-center">
+                <p>:( No Spells found</p>
+              </td>
+            </tr>
           </tbody>
         </table>
-      </div>
   </div>
 </template>
 

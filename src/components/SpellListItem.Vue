@@ -1,35 +1,40 @@
 <template>
   <tr :class="{ 'table-info': bookmarked }">
-    <td><i class="fa fa-star" v-show:bookmarked="bookmarked"></i> {{ spell.name }}</td>
-    <td>{{ spell.class }}</td>
-    <td>{{ spell.level }}</td>
     <td>
-        <button class="btn btn-primary" @click="expandSpell" v-show:expanded="!expanded"><i class="fa fa-arrow-down"></i> Expand</button>
-        <button class="btn btn-primary" @click="expandSpell" v-show:expanded="expanded"><i class="fa fa-arrow-up"></i> Collapse</button>
+      <div class="row">
+        <div class="col"><i class="fa fa-star" v-show:bookmarked="bookmarked"></i> {{ spell.name }}</div>
+        <div class="col">{{ spell.class }}</div>
+        <div class="col">{{ spell.level }}</div>
+        <div class="col">
+          <button class="btn btn-primary" @click="expandSpell" v-show:expanded="!expanded"><i class="fa fa-arrow-down"></i> Expand</button>
+          <button class="btn btn-primary" @click="expandSpell" v-show:expanded="expanded"><i class="fa fa-arrow-up"></i> Collapse</button>
 
-        <button class="btn btn-success" v-show:bookmarked="!bookmarked" @click="bookmarkSpell(spell)"><i class="fa fa-book"></i> Bookmark</button>
-        <button class="btn btn-danger" v-show:bookmarked="bookmarked" @click="bookmarkSpell(spell)"><i class="fa fa-book"></i> Remove Bookmark</button>
+          <button class="btn btn-success" v-show:bookmarked="!bookmarked" @click="bookmarkSpell(spell)"><i class="fa fa-book"></i> Bookmark</button>
+          <button class="btn btn-danger" v-show:bookmarked="bookmarked" @click="bookmarkSpell(spell)"><i class="fa fa-book"></i> Remove Bookmark</button>
+        </div>
+      </div>
+      <div class="row" v-show:expanded="expanded">
+        <div class="col">
+          <table class="table text-muted table-sm">
+            <tr>
+              <td>Cast Time: <br> {{ spell.casting_time }}</td>
+              <td>Components: <br> {{ spell.components }}</td>
+            </tr>
+            <tr>
+              <td>Range: <br> {{ spell.range }}</td>
+              <td>Duration: <br> {{ spell.duration }}</td>
+            </tr>
+            <tr>
+              <td>Concentration: <br> {{ spell.concentration }}</td>
+              <td>Materials: <br> {{ spell.materials }}</td>
+            </tr>
+          </table>
+          <p class="card-text">{{ spell.desc }}</p>
+          <p class="card-text">{{ spell.higher_level }}</p>
+        </div>
+      </div>
     </td>
   </tr>
-  <!--<tr v-show:expanded="expanded">
-    <td>
-      <table class="table text-muted">
-          <tr>
-            <td>Cast Time: <br> {{ spell.casting_time }}</td>
-            <td>Components: <br> {{ spell.components }}</td>
-          </tr>
-          <tr>
-            <td>Range: <br> {{ spell.range }}</td>
-            <td>Duration: <br> {{ spell.duration }}</td>
-          </tr>
-          <tr>
-            <td>Concentration: <br> {{ spell.concentration }}</td>
-            <td>Materials: <br> {{ spell.materials }}</td>
-          </tr>
-        </table>
-        <p class="card-text">{{ spell.desc }}</p>
-    </td>
-  </tr>-->
 </template>
 
 <script defer>
