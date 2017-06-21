@@ -13,6 +13,7 @@
     "test": "npm run unit && npm run e2e"
   },
   "dependencies": {
+    "lodash": "^4.17.4",
     "vue": "^2.3.3",
     "vuex": "^2.3.1"
   },

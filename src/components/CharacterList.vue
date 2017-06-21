@@ -1,7 +1,7 @@
 <template>
     <div class="container-fluid">
         <h2><i class="fa fa-users"></i> Characters</h2>
-        <table class="table table-bordered">
+        <table class="table">
             <thead class="thead-inverse">
                 <tr>
                     <th>Name</th>
