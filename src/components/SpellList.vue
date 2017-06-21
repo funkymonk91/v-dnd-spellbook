@@ -3,14 +3,18 @@
 
 
         <table class="table">
-          <!--<thead>
+          <thead class="table-inverse">
             <tr>
-              <th>Name</th>
-              <th>Class</th>
-              <th>Level</th>
-              <th></th>
+              <th>
+                <div class="row">
+                  <div class="col">Name</div>
+                  <div class="col">Class</div>
+                  <div class="col">Level</div>
+                  <div class="col"></div>
+                </div>
+              </th>
             </tr>
-          </thead>-->
+          </thead>
           <tbody>
             <spellListItem v-for="(spell, index) in spells" :key="index" :spell="spell" :bookmarked="isSpellBookmarked(spell)"></spellListItem>
 

@@ -37,7 +37,7 @@
   </tr>
 </template>
 
-<script defer>
+<script>
 export default {
   props: ['bookmarked', 'spell'],
   data () {
@@ -62,7 +62,10 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+  .row {
+    margin-bottom: 10px;
+  }
   .card {
     margin-bottom: 10px;
   }
