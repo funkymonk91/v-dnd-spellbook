@@ -10,7 +10,7 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
     state: {
         mode: 'characterList', // spells, characterList, characterCreate
-        spells: spells,
+        spells: _.sortBy(spells, ['level_sort', 'name']),
         filteredSpells: spells,
         bookmarks: [],
         characterClasses: characterClasses,
@@ -124,7 +124,7 @@ export const store = new Vuex.Store({
 
             switch(mode) {
                 case 'spells':
-                    state.filteredSpells = spells
+                    state.filteredSpells = state.spells
                     break
             }
 

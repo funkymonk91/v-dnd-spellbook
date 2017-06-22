@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import _ from 'lodash'
 import Navbar from './components/Navbar'
 import SpellList from './components/SpellList'
 import CharacterList from './components/CharacterList'

@@ -1,14 +1,12 @@
 <template>
   <div class="container-fluid">
-
-
-        <table class="table">
+        <table id="spellList" class="table table-striped">
           <thead class="table-inverse">
             <tr>
               <th>
                 <div class="row">
-                  <div class="col">Name</div>
-                  <div class="col">Class</div>
+                  <div class="col-5">Name</div>
+                  <div class="col-3">Class</div>
                   <div class="col">Level</div>
                   <div class="col"></div>
                 </div>
@@ -20,7 +18,7 @@
 
             <tr v-if="spells.length === 0">
               <td class="text-center">
-                <p>:( No Spells found</p>
+                <h4>No Spells found :(</h4>
               </td>
             </tr>
           </tbody>
@@ -49,6 +47,6 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
 
 </style>
