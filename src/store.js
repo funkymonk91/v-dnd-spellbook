@@ -77,8 +77,8 @@ export const store = new Vuex.Store({
             if (query !== '') {
                 var tempFilteredSpells = []
                 // Loop through all the spells
-                for (var i = 0; i < spells.length; i++) {
-                    var spell = spells[i];
+                for (var i = 0; i < state.filteredSpells.length; i++) {
+                    var spell = state.filteredSpells[i];
 
                     // Spell props that we are comparing against
                     if (
@@ -90,7 +90,7 @@ export const store = new Vuex.Store({
                         tempFilteredSpells.push(spell)
                     }
                 }
-                state.filteredSpells = tempFilteredSpells
+                state.filteredSpells = _.sortBy(tempFilteredSpells, ['level_sort', 'name'])
             }
             else {
                 state.filteredSpells = state.spells
@@ -127,7 +127,6 @@ export const store = new Vuex.Store({
                     state.filteredSpells = state.spells
                     break
             }
-
         },
         filterBookmarkedSpells (state) {
             var tempFilteredSpells = []
