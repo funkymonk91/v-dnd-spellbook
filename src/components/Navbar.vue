@@ -7,7 +7,7 @@
         <a href="#" @click.prevent="showAllSpells">All Spells</a>
         
         <form class="form-inline my-2 my-lg-0" @submit.prevent="search" v-show="this.$store.getters.mode === 'spells'">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" v-model:searchQuery="searchQuery">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" v-model="searchQuery">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
     </nav>

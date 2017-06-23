@@ -11,7 +11,7 @@
                 <label for="">Select Race:</label>
                 <select class="form-control" v-model="character.race">
                     <option value="" disabled selected></option>
-                    <option v-for="aRace in $store.getters.characterRaces">{{ aRace.name }}</option>
+                    <option v-for="(aRace, index) in $store.getters.characterRaces" :key="index">{{ aRace.name }}</option>
                 </select>
             </div>
 
@@ -19,7 +19,7 @@
                 <label for="">Select Sub Race:</label>
                 <select class="form-control" v-model="character.subRace">
                     <option value="" disabled selected></option>
-                    <option v-for="sRace in $store.getters.characterSubRaces(character.race)">{{ sRace.name }}</option>
+                    <option v-for="(sRace, index) in $store.getters.characterSubRaces(character.race)" :key="index">{{ sRace.name }}</option>
                 </select>
             </div>
 
@@ -27,7 +27,7 @@
                 <label for="">Select Class:</label>
                 <select class="form-control" v-model="character.class">
                     <option value="" disabled selected></option>
-                    <option v-for="aClass in $store.getters.characterClasses">{{ aClass.name }}</option>
+                    <option v-for="(aClass, index) in $store.getters.characterClasses" :key="index">{{ aClass.name }}</option>
                 </select>
             </div>
 
@@ -35,7 +35,7 @@
                 <label for="">Level:</label>
                 <select name="" id="" class="form-control" v-model="character.classLevel">
                     <option value="" disabled selected></option>
-                    <option v-for="n in 20">{{ n }}</option>
+                    <option v-for="(n, index) in 20" :key="index">{{ n }}</option>
                 </select>
             </div>
 
