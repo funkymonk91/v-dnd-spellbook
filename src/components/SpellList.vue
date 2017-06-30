@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid">
+  <div class="">
         <table id="spellList" class="table table-striped">
           <thead class="table-inverse">
             <tr>

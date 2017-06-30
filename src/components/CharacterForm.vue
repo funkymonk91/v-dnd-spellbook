@@ -1,6 +1,6 @@
 <template>
-    <div class="container">
-        
+    <div class="container-fluid">
+        <h2><i class="fa fa-user"></i> New Character</h2>
         <form>
             <div class="form-group">
                 <label for="">Character Name</label>
@@ -44,8 +44,8 @@
                 <input type="number" class="form-control" v-model="character.spellCastingScore">
             </div>
 
-            <button class="btn btn-danger" @click.prevent="showCharacters"><i class="fa fa-times"></i> Cancel</button>
-            <button class="btn btn-primary" @click.prevent="saveCharacter"><i class="fa fa-save"></i> Save Character</button>
+            <button class="btn btn-primary mr-2" @click.prevent="saveCharacter">Save</button>
+            <a href="#" @click.prevent="showCharacters">Cancel</a>
 
             <button class="btn btn-danger pull-right" v-if="character.id !== ''" @click.prevent="deleteCharacter(character.id)"><i class="fa fa-trash fa-lg"></i></button>
         </form>
