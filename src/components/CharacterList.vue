@@ -22,7 +22,7 @@
             </tbody>
         </table>
 
-        <button class="btn btn-success" v-on:click="$store.dispatch('createCharacter')"><i class="fa fa-plus"></i> Create New Character</button> 
+        <router-link class="btn btn-success" to="/characterForm"><i class="fa fa-plus"></i> Create New Character</router-link> 
     </div>
 </template>
 

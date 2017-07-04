@@ -6,7 +6,7 @@
         <td class="text-center">{{ character.classLevel }}</td>
         <td class="text-center">
             <button class="btn btn-success" v-if="character.id !== $store.state.currentCharacter.id" @click="setCurrentCharacter(character)"><i class="fa fa-user fa-lg"></i></button>
-            <button class="btn btn-primary" @click="editCharacter(character.id)"><i class="fa fa-pencil fa-lg"></i></button>
+            <router-link class="btn btn-primary" :to="{ name: 'character', params: { id: character.id }}"><i class="fa fa-pencil fa-lg"></i></router-link>
         </td>
     </tr>    
 </template>

@@ -20,16 +20,16 @@
             <div class="col">
                 <ul class="navbar-nav justify-content-center d-flex flex-row">
                     <li class="nav-item mr-3">
-                        <a class="nav-link" href="#" @click.prevent="showCharacters">
-                            <i class="fa fa-users"></i> Characters</a>
+                        <router-link class="nav-link" to="/characters">
+                            <i class="fa fa-users"></i> Characters</router-link>
                     </li>
                     <li class="nav-item mr-3">
-                        <a class="nav-link" href="#" @click.prevent="showBookmarked">
-                            <i class="fa fa-bookmark"></i> {{ bookmarked }}</a>
+                        <router-link class="nav-link" to="/bookmarks">
+                            <i class="fa fa-bookmark"></i> {{ bookmarked }}</router-link>
                     </li>
                     <li class="nav-item mr-3">
-                        <a class="nav-link" href="#" @click.prevent="showAllSpells">
-                            <i class="fa fa-book"></i> All Spells</a>
+                        <router-link class="nav-link" to="/spells">
+                            <i class="fa fa-book"></i> All Spells</router-link>
                     </li>
                 </ul>
             </div>
@@ -56,15 +56,6 @@ export default {
     methods: {
         search() {
             this.$store.dispatch('searchSpells', this.searchQuery)
-        },
-        showBookmarked() {
-            this.$store.dispatch('filterBookmarkedSpells')
-        },
-        showAllSpells() {
-            this.$store.dispatch('changeMode', 'spells')
-        },
-        showCharacters() {
-            this.$store.dispatch('changeMode', 'characterList')
         }
     }
 }

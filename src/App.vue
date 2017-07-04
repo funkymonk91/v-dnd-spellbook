@@ -2,11 +2,7 @@
   <div id="app">
     <navbar></navbar>
 
-    <characterList v-if="$store.getters.mode === 'characterList'"></characterList>
-
-    <characterForm v-if="$store.getters.mode === 'characterCreate'"></characterForm>
-
-    <spellList v-if="$store.getters.mode === 'spells'"></spellList>
+    <router-view></router-view>
   </div>
 </template>
 
