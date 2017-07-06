@@ -16,10 +16,7 @@ import CharacterForm from './components/CharacterForm'
 export default {
   name: 'app',
   components: {
-    Navbar,
-    SpellList,
-    CharacterList,
-    CharacterForm
+    Navbar
   },
   created: function () {
     this.loadBookmarks()
@@ -35,15 +32,6 @@ export default {
       if (localStorage['characters'] !== undefined) {
         this.$store.state.characters = JSON.parse(localStorage['characters'])
       }
-    },
-    showCharacters () {
-      this.mode = "characterList"
-    },
-    createCharacter () {
-      this.mode = "createCharacter"
-    },
-    editCharacter () {
-      this.mode = "createCharacter"
     }
   }
 }

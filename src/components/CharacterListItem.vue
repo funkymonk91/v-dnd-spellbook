@@ -1,7 +1,7 @@
 <template>
     <tr :class="{ 'table-success': character.id === $store.state.currentCharacter.id }">
         <td>{{ character.name }}</td>
-        <td>{{ this.race }}</td>
+        <td>{{ character.race }}</td>
         <td>{{ character.class }}</td>
         <td class="text-center">{{ character.classLevel }}</td>
         <td class="text-center">
@@ -14,11 +14,6 @@
 <script>
 export default {
     props: ['character'],
-    computed: {
-        race: function () {
-            return (this.character.subRace !== '') ? this.character.subRace : this.character.race
-        }
-    },
     methods: {
         editCharacter: function (id) {
             this.$store.dispatch('editCharacter', id)

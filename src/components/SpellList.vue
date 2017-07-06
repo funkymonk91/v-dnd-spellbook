@@ -34,7 +34,19 @@ export default {
     SpellListItem
   },
   computed: {
-    spells: function() {
+    spells: function () {
+      switch (this.$route.path) {
+        case '/bookmarks':
+          this.$store.dispatch('filterBookmarkedSpells')
+          break;
+        case '/spellbook':
+          this.$store.dispatch('filterCharacterSpells')
+          break;
+        default:
+          this.$store.dispatch('searchSpells', '')
+          break;
+      }
+      
       return this.$store.getters.filteredSpells
     }
   },

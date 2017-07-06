@@ -1,18 +1,10 @@
 <template>
     <div class="navbar-inverse bg-inverse mb-2 py-1">
         <div class="row">
-            <!--<div class="col-3 col-sm-2">
-                                                <a class="navbar-brand ml-2" href="#">
-                                                    Spellbook
-                                                </a>
-                                            </div>-->
             <div class="col px-4">
-                <!--v-show="this.$store.getters.mode === 'spells'"-->
                 <form class="form-inline" @submit.prevent="search">
-    
                     <input class="form-control col mr-sm-2" type="search" placeholder="Search Spells" v-model="searchQuery">
                     <button class="btn btn-outline-success" type="submit">Search</button>
-    
                 </form>
             </div>
         </div>
@@ -23,9 +15,13 @@
                         <router-link class="nav-link" to="/characters">
                             <i class="fa fa-users"></i> Characters</router-link>
                     </li>
-                    <li class="nav-item mr-3">
+                    <li v-if="this.$store.state.currentCharacter.id === ''" class="nav-item mr-3">
                         <router-link class="nav-link" to="/bookmarks">
-                            <i class="fa fa-bookmark"></i> {{ bookmarked }}</router-link>
+                            <i class="fa fa-bookmark"></i> Bookmarked </router-link>
+                    </li>
+                    <li v-else class="nav-item mr-3">
+                        <router-link class="nav-link" to="/spellbook">
+                            <i class="fa fa-book"></i> {{ this.$store.state.currentCharacter.name + '\'s Spellbook' }}</router-link>
                     </li>
                     <li class="nav-item mr-3">
                         <router-link class="nav-link" to="/spells">
@@ -43,14 +39,6 @@ export default {
     data() {
         return {
             searchQuery: '',
-        }
-    },
-    computed: {
-        bookmarked: function () {
-            if (this.$store.state.currentCharacter.id !== '') {
-                return this.$store.state.currentCharacter.name + '\'s Spellbook'
-            }
-            return 'Bookmarked'
         }
     },
     methods: {

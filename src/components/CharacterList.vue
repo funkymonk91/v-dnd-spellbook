@@ -22,7 +22,7 @@
             </tbody>
         </table>
 
-        <router-link class="btn btn-success" to="/characterForm"><i class="fa fa-plus"></i> Create New Character</router-link> 
+        <button class="btn btn-success" @click="createCharacter"><i class="fa fa-plus"></i> Create New Character</button> 
     </div>
 </template>
 
@@ -41,6 +41,7 @@ export default {
     methods: {
         createCharacter: function () {
             this.$store.dispatch('createCharacter')
+            this.$router.push('/characterForm')
         }
     }
 }

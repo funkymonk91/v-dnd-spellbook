@@ -1,6 +1,5 @@
 <template>
     <div class="container-fluid">
-        <h2><i class="fa fa-user"></i> New Character</h2>
         <form>
             <div class="form-group">
                 <label for="">Character Name</label>
@@ -11,15 +10,7 @@
                 <label for="">Select Race:</label>
                 <select class="form-control" v-model="character.race">
                     <option value="" disabled selected></option>
-                    <option v-for="(aRace, index) in $store.getters.characterRaces" :key="index">{{ aRace.name }}</option>
-                </select>
-            </div>
-
-            <div class="form-group" v-if="$store.getters.characterSubRaces(character.race).length > 0">
-                <label for="">Select Sub Race:</label>
-                <select class="form-control" v-model="character.subRace">
-                    <option value="" disabled selected></option>
-                    <option v-for="(sRace, index) in $store.getters.characterSubRaces(character.race)" :key="index">{{ sRace.name }}</option>
+                    <option v-for="(aRace, index) in $store.getters.characterRaces" :key="index">{{ aRace }}</option>
                 </select>
             </div>
 
@@ -44,12 +35,11 @@
                 <input type="number" class="form-control" v-model="character.spellCastingScore">
             </div>
 
-            <button class="btn btn-primary mr-2" @click.prevent="saveCharacter">Save</button>
-            <a href="#" @click.prevent="showCharacters">Cancel</a>
+            <button class="btn btn-primary mr-2" @click.prevent="saveCharacter(character.id)">Save</button>
+            <router-link to="/characters">Cancel</router-link to="">
 
             <button class="btn btn-danger pull-right" v-if="character.id !== ''" @click.prevent="deleteCharacter(character.id)"><i class="fa fa-trash fa-lg"></i></button>
         </form>
-
     </div>
 </template>
 
@@ -57,19 +47,22 @@
 export default {
     computed: {
         character: function () {
+            // If there is an id param, load that character up
+            if(this.$route.params.id) {
+                return this.$store.getters.characterById(this.$route.params.id)
+            }
+            // Otherwise, get the current character.
             return this.$store.getters.currentCharacter
         }
     },
     methods: {
-        saveCharacter () {
-            this.$store.dispatch('saveCharacter')
-            this.showCharacters()
-        },
-        showCharacters () {
-            this.$store.dispatch('changeMode', 'characterList')
+        saveCharacter (characterId) {
+            this.$store.dispatch('saveCharacter', characterId)
+            this.$router.push('/characters')
         },
         deleteCharacter (characterId) {
             this.$store.dispatch('deleteCharacter', characterId)
+            this.$router.push('/characters')
         }
     }
 }

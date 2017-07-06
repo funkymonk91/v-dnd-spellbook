@@ -1,138 +1,34 @@
 [
-    {
-        "name": "Dwarf",
-        "sub_races": [
-            {
-                "name": "Mountain Dwarf"
-            },
-            {
-                "name": "Hill Dwarf"
-            }
-        ]
-    },
-    {
-        "name": "Elf",
-        "sub_races": [
-            {
-                "name": "High Elf"
-            },
-            {
-                "name": "Wood Elf"
-            },
-            {
-                "name": "Drow"
-            }
-        ]
-    },
-    {
-        "name": "Halfling",
-        "sub_races": []
-    },
-    {
-        "name": "Dragonborn",
-        "sub_races": []
-    },
-    {
-        "name": "Human",
-        "sub_races": []
-    },
-    {
-        "name": "Gnome",
-        "sub_races": [
-            {
-                "name": "Wood Gnome"
-            },
-            {
-                "name": "Rock Gnome"
-            },
-            {
-                "name": "Deep Gnome (Svirfneblin)"
-            }
-        ]
-    },
-    {
-        "name": "Half-Elf",
-        "sub_races": []
-    },
-    {
-        "name": "Half-Orc",
-        "sub_races": []
-    },
-    {
-        "name": "Tiefling",
-        "sub_races": []
-    },
-    {
-        "name": "Kenku",
-        "sub_races": []
-    },
-    {
-        "name": "Tabaxi",
-        "sub_races": []
-    },
-    {
-        "name": "Aasimar",
-        "sub_races": []
-    },
-    {
-        "name": "Lizardfolk",
-        "sub_races": []
-    },
-    {
-        "name": "Triton",
-        "sub_races": []
-    },
-    {
-        "name": "Goliath",
-        "sub_races": []
-    },
-    {
-        "name": "Firbolg",
-        "sub_races": []
-    },
-    {
-        "name": "Orc",
-        "sub_races": []
-    },
-    {
-        "name": "Goblin",
-        "sub_races": []
-    },
-    {
-        "name": "Bugbear",
-        "sub_races": []
-    },
-    {
-        "name": "Kobold",
-        "sub_races": []
-    },
-    {
-        "name": "Hobgoblin",
-        "sub_races": []
-    },
-    {
-        "name": "Yuan-ti Pureblood",
-        "sub_races": []
-    },
-    {
-        "name": "Genasi",
-        "sub_races": [
-            {
-                "name": "Fire Genasi"
-            },
-            {
-                "name": "Water Genasi"
-            },
-            {
-                "name": "Eath Genasi"
-            },
-            {
-                "name": "Air Genasi"
-            }
-        ]
-    },
-    {
-        "name": "Aarakocra",
-        "sub_races": []
-    }
+    "Mountain Dwarf",
+    "Hill Dwarf",
+    "High Elf",
+    "Wood Elf",
+    "Drow",
+    "Halfling",
+    "Dragonborn",
+    "Human",
+    "Wood Gnome",
+    "Rock Gnome",
+    "Deep Gnome (Svirfneblin)",
+    "Half-Elf",
+    "Half-Orc",
+    "Tiefling",
+    "Kenku",
+    "Tabaxi",
+    "Aasimar",
+    "Lizardfolk",
+    "Triton",
+    "Goliath",
+    "Firbolg",
+    "Orc",
+    "Goblin",
+    "Bugbear",
+    "Kobold",
+    "Hobgoblin",
+    "Yuan-ti Pureblood",
+    "Fire Genasi",
+    "Water Genasi",
+    "Earth Genasi",
+    "Air Genasi",
+    "Aarakocra"
 ]
