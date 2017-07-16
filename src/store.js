@@ -9,9 +9,55 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    settings: {
+      default: {
+        spellsPerPage: 25
+      },
+      user: {
+        spellsPerPage: 25
+      }
+    },
+    filters: {
+      default: {
+        castTime: '',
+        class: '',
+        components: '',
+        concentration: '',
+        duration: '',
+        level: '',
+        range: '',
+        schoo: ''
+      },
+      user: {
+        castTime: '',
+        class: '',
+        components: '',
+        concentration: '',
+        duration: '',
+        level: '',
+        range: '',
+        schoo: ''
+      }
+    },
     spells: spells,
     filteredSpells: spells,
-    bookmarks: [],
+    selectedSpell: {
+      id: "",
+      name: "",
+      desc: "",
+      page: "",
+      range: "",
+      components: "",
+      ritual: "",
+      duration: "",
+      concentration: "",
+      casting_time: "",
+      level_sort: "",
+      level: "",
+      school: "",
+      class: ""
+    },
+    searchQuery: '',
     characterClasses: characterClasses,
     characterRaces: characterRaces,
     characters: [],
@@ -28,11 +74,36 @@ export default new Vuex.Store({
     }
   },
   getters: {
+    settings(state) {
+      return state.settings
+    },
+    searchQuery(state) {
+      return state.searchQuery
+    },
+    spellCount(state) {
+      return state.spells.length
+    },
+    spells(state) {
+      return state.filteredSpells
+    },
     filteredSpells(state) {
       return state.filteredSpells
     },
     bookmarks(state) {
       return state.bookmarks
+    },
+    bookmarkedSpells(state) {
+      var spells = []
+      
+      _.forEach(state.spells, function (spell, i) {
+        // If the current character is NOT set and the spell is in the global bookmarks OR the current character IS set and the spell is in the current characters spellbook
+        if ((state.currentCharacter.id === '' && state.bookmarks.indexOf(spell.name) > -1) 
+          || (state.currentCharacter.id !== '' && state.currentCharacter.spellBook.indexOf(spell.name) > -1)) {
+          spells.push(spell)
+        }
+      })
+      
+      return spells
     },
     currentCharacter(state) {
       return state.currentCharacter
@@ -57,66 +128,46 @@ export default new Vuex.Store({
       }
 
       return ''
+    },
+    selectedSpell(state) {
+      return state.selectedSpell
+    },
+    isSpellBookmarked: (state) => (spell) => {
+      return (state.currentCharacter.spellBook.indexOf(spell.name) !== -1) ? true : false
     }
   },
   mutations: {
+    saveSettings(state) {
+      localStorage.setItem('settings', JSON.stringify(state.settings.user))
+    },
+    clearSearch(state) {
+      state.searchQuery = ''
+    },
     searchSpells(state, query) {
-      query = query.toLowerCase()
-      if (query !== '') {
+      state.searchQuery = query.toLowerCase()
+      if (state.searchQuery !== '') {
         var tempFilteredSpells = []
         // Loop through all the spells
-        for (var i = 0; i < state.filteredSpells.length; i++) {
-          var spell = state.filteredSpells[i];
-
+        _.forEach(state.spells, function (spell, i) {
+          // debugger
           // Spell props that we are comparing against
-          if (
-            spell.name.toLowerCase().indexOf(query) !== -1 ||
-            spell.level.indexOf(query) !== -1 ||
-            spell.school.toLowerCase().indexOf(query) !== -1 ||
-            spell.class.toLowerCase().indexOf(query) !== -1
-          ) {
+          if (spell.name.toLowerCase().indexOf(state.searchQuery) !== -1 || spell.level.indexOf(state.searchQuery) !== -1 || spell.school.toLowerCase().indexOf(state.searchQuery) !== -1 || spell.class.toLowerCase().indexOf(state.searchQuery) !== -1) {
             tempFilteredSpells.push(spell)
           }
-        }
+        });
         state.filteredSpells = _.sortBy(tempFilteredSpells, ['level_sort', 'name'])
       } else {
         state.filteredSpells = state.spells
       }
     },
     addBookmark(state, spell) {
-      if (state.currentCharacter.id === '') {
-        state.bookmarks.push(spell.name)
-        localStorage.setItem('bookmarks', JSON.stringify(state.bookmarks))
-      } else {
-        state.currentCharacter.spellBook.push(spell.name)
-        store.dispatch('saveCharacter')
-      }
+      state.currentCharacter.spellBook.push(spell.name)
+      localStorage.setItem('characters', JSON.stringify(state.characters))
     },
     removeBookmark(state, spell) {
-      if (state.currentCharacter.id === '') {
-        const index = state.bookmarks.indexOf(spell.name)
-        state.bookmarks.splice(index, 1)
-        // Persist the bookmarks
-        localStorage.setItem('bookmarks', JSON.stringify(state.bookmarks))
-      } else {
-        const index = state.currentCharacter.spellBook.indexOf(spell.name)
-        state.currentCharacter.spellBook.splice(index, 1)
-        store.dispatch('saveCharacter')
-      }
-    },
-    filterBookmarkedSpells(state) {
-      var tempFilteredSpells = []
-      // Loop through all the spells
-      for (var i = 0; i < state.spells.length; i++) {
-        var spell = state.spells[i];
-
-        // Spell props that we are comparing against
-        if (state.bookmarks.indexOf(spell.name) !== -1) {
-          tempFilteredSpells.push(spell)
-        }
-      }
-
-      state.filteredSpells = tempFilteredSpells
+      const index = state.currentCharacter.spellBook.indexOf(spell.name)
+      state.currentCharacter.spellBook.splice(index, 1)
+      localStorage.setItem('characters', JSON.stringify(state.characters))
     },
     filterCharacterSpells(state) {
       var tempFilteredSpells = []
@@ -172,6 +223,7 @@ export default new Vuex.Store({
     },
     setCurrentCharacter(state, character) {
       state.currentCharacter = character
+      localStorage.setItem('currentCharacter', JSON.stringify(state.currentCharacter))
     },
     deleteCharacter(state, characterId) {
       for (var i = 0; i < state.characters.length; i++) {
@@ -196,9 +248,32 @@ export default new Vuex.Store({
       }
 
       localStorage.setItem('characters', JSON.stringify(state.characters))
+    },
+    selectSpell(state, spell) {
+      state.selectedSpell = spell
+    },
+    clearCharacter(state) {
+      state.currentCharacter =  {
+        id: '',
+        name: '',
+        race: '',
+        subRace: '',
+        class: '',
+        classLevel: '',
+        spellCastingScore: 0,
+        spellBook: [],
+        prepared: []
+      }
+      localStorage.removeItem('currentCharacter')
     }
   },
   actions: {
+    saveSettings(context) {
+      context.commit('saveSettings')
+    },
+    clearSearch(context) {
+      context.commit('clearSearch')
+    },
     searchSpells(context, query) {
       context.commit('searchSpells', query)
     },
@@ -225,6 +300,12 @@ export default new Vuex.Store({
     },
     deleteCharacter(context, characterId) {
       context.commit('deleteCharacter', characterId)
+    },
+    selectSpell(context, spell) {
+      context.commit('selectSpell', spell)
+    },
+    clearCharacter(context) {
+      context.commit('clearCharacter')
     }
   }
 })
