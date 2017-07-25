@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <navbar></navbar>
-  
+    <settingsModal></settingsModal>
     <router-view></router-view>
   </div>
 </template>
@@ -9,11 +9,13 @@
 <script>
 import _ from 'lodash'
 import Navbar from './components/Navbar'
+import SettingsModal from './components/SettingsModal'
 
 export default {
   name: 'app',
   components: {
-    Navbar
+    Navbar,
+    SettingsModal
   },
   created: function () {
     if (localStorage['settings'] !== undefined) {
@@ -25,9 +27,9 @@ export default {
     if (localStorage['currentCharacter'] !== undefined) {
       this.$store.state.currentCharacter = JSON.parse(localStorage['currentCharacter'])
     }
-    if (localStorage['filters'] !== undefined) {
-      this.$store.state.filters.user = JSON.parse(localStorage['filters'])
-    }
+    // if (localStorage['filters'] !== undefined) {
+    //   this.$store.state.filters.user = JSON.parse(localStorage['filters'])
+    // }
   },
   beforeRouteLeave(to, from, next) {
     this.$state.dispatch('clearSearch')

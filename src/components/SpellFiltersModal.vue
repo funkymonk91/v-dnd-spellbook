@@ -4,24 +4,23 @@
       <div class="modal-content">
         <div class="modal-header bg-success text-white">
           <h5 class="modal-title">
-            <i class="fa fa-filter"></i> Filters -
-            <small>Get to the nitty gritty</small>
+            <i class="fa fa-filter"></i> Filters
           </h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="modal-body">
+        <div class="modal-body px-0">
           <div class="container">
             <form action="">
               <div class="row">
   
                 <!-- CLASS  -->
-                <div class="col-12 col-sm-6 col-lg-4">
+                <div class="px-2 col-6 col-lg-4">
                   <div class="form-group mb-2">
                     <label for="">Class:</label>
-                    <select class="form-control">
-                      <option value="" disabled selected></option>
+                    <select class="form-control" v-model="filters.class" @change="saveFilters">
+                      <option value="" selected></option>
                       <option v-for="(item, index) in classes" :key="index">{{ item.name }}</option>
                       <option value="Ritual Caster">Ritual Caster</option>
                     </select>
@@ -29,90 +28,88 @@
                 </div>
   
                 <!-- SPELL LEVEL  -->
-                <div class="col-12 col-sm-6 col-lg-4">
+                <div class="px-2 col-6 col-lg-4">
                   <div class="form-group mb-2">
                     <label for="">Level:</label>
-                    <select class="form-control">
-                      <option value="" disabled selected></option>
-                      <option v-for="(item, index) in spellLevels" :key="index" :value="index">{{ item }}</option>
+                    <select class="form-control" v-model="filters.level" @change="saveFilters">
+                      <option value="" selected></option>
+                      <option v-for="(item, index) in spellLevels" :key="index" :value="item">{{ item }}</option>
                     </select>
                   </div>
                 </div>
   
                 <!-- SPELL SCHOOL  -->
-                <div class="col-12 col-sm-6 col-lg-4">
+                <div class="px-2 col-6 col-lg-4">
                   <div class="form-group mb-2">
                     <label for="">School:</label>
-                    <select class="form-control">
-                      <option value="" disabled selected></option>
-                      <option v-for="(item, index) in schools" :key="index" :value="index">{{ item }}</option>
+                    <select class="form-control" v-model="filters.school" @change="saveFilters">
+                      <option value="" selected></option>
+                      <option v-for="(item, index) in schools" :key="index" :value="item">{{ item }}</option>
                     </select>
                   </div>
                 </div>
   
                 <!-- COMPONENTS  -->
-                <div class="col-12 col-sm-6 col-lg-4">
+                <div class="px-2 col-6 col-lg-4">
                   <div class="form-group mb-2">
                     <label for="">Components:</label>
-                    <select class="form-control">
-                      <option value="" disabled selected></option>
-                      <option v-for="(item, index) in components" :key="index" :value="index">{{ item }}</option>
+                    <select class="form-control" v-model="filters.components" @change="saveFilters">
+                      <option value="" selected></option>
+                      <option v-for="(item, index) in components" :key="index" :value="item">{{ item }}</option>
                     </select>
                   </div>
-  
                 </div>
   
                 <!-- CONCENTRATION  -->
-                <div class="col-12 col-sm-6 col-lg-4">
+                <div class="px-2 col-6 col-lg-4">
                   <div class="form-group mb-2">
                     <label for="">Concentration:</label>
-                    <select class="form-control">
-                      <option value="" disabled selected></option>
-                      <option v-for="(item, index) in concentrations" :key="index" :value="index">{{ item }}</option>
+                    <select class="form-control" v-model="filters.concentration" @change="saveFilters">
+                      <option value="" selected></option>
+                      <option v-for="(item, index) in concentrations" :key="index" :value="item">{{ item }}</option>
                     </select>
                   </div>
-  
                 </div>
   
                 <!-- DURATION  -->
-                <div class="col-12 col-sm-6 col-lg-4">
+                <div class="px-2 col-6 col-lg-4">
                   <div class="form-group mb-2">
                     <label for="">Duration:</label>
-                    <select class="form-control">
-                      <option value="" disabled selected></option>
-                      <option v-for="(item, index) in durations" :key="index" :value="index">{{ item }}</option>
+                    <select class="form-control" v-model="filters.duration" @change="saveFilters">
+                      <option value="" selected></option>
+                      <option v-for="(item, index) in durations" :key="index" :value="item">{{ item }}</option>
                     </select>
                   </div>
                 </div>
   
                 <!-- RANGE  -->
-                <div class="col-12 col-sm-6 col-lg-4">
+                <div class="px-2 col-6 col-lg-4">
                   <div class="form-group mb-2">
                     <label for="">Range:</label>
-                    <select class="form-control">
-                      <option value="" disabled selected></option>
-                      <option v-for="(item, index) in ranges" :key="index" :value="index">{{ item }}</option>
+                    <select class="form-control" v-model="filters.range" @change="saveFilters">
+                      <option value="" selected></option>
+                      <option v-for="(item, index) in ranges" :key="index" :value="item">{{ item }}</option>
                     </select>
                   </div>
                 </div>
   
                 <!-- CAST TIME  -->
-                <div class="col-12 col-sm-6 col-lg-4">
+                <div class="px-2 col-6 col-lg-4">
                   <div class="form-group mb-2">
                     <label for="">Cast Time:</label>
-                    <select class="form-control">
-                      <option value="" disabled selected></option>
-                      <option v-for="(item, index) in castTimes" :key="index" :value="index">{{ item }}</option>
+                    <select class="form-control" v-model="filters.castTime" @change="saveFilters">
+                      <option value="" selected></option>
+                      <option v-for="(item, index) in castTimes" :key="index" :value="item">{{ item }}</option>
                     </select>
                   </div>
                 </div>
-  
               </div>
               <!-- /.row -->
             </form>
           </div>
         </div>
         <div class="modal-footer">
+          <button class="btn btn-primary" @click="clearFilters">Clear Filters</button>
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         </div>
       </div>
@@ -167,6 +164,18 @@ export default {
       });
 
       return results.sort()
+    },
+    filters: function () {
+      return this.$store.state.filters.user
+    }
+  },
+  methods: {
+    saveFilters: _.debounce(function () {
+      this.$store.dispatch('searchSpells', this.$store.getters.searchQuery)
+    }, 300),
+    clearFilters() {
+      this.$store.dispatch('clearFilters')
+      this.$store.dispatch('searchSpells', this.$store.getters.searchQuery)
     }
   }
 }

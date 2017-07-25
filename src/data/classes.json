@@ -20,7 +20,7 @@
         "sub_classes": []
     },
     {
-        "name": "Fighter",
+        "name": "Eldritch Knight",
         "spell_casting_stat": "INT",
         "sub_classes": []
     },
@@ -40,7 +40,7 @@
         "sub_classes": []
     },
     {
-        "name": "Rogue",
+        "name": "Arcane Trickster",
         "spell_casting_stat": "INT",
         "sub_classes": []
     },

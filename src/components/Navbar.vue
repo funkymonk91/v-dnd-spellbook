@@ -32,11 +32,11 @@
                                 <i class="fa fa-filter fa-lg"></i> <span class="hidden-xs-down">Filter</span>
                             </a>
                         </li> 
-                        <!-- <li class="nav-item mr-3">
-                            <router-link class="nav-link" :class="{ active: $route.path === '/settings' }" to="/settings">
+                        <li class="nav-item mr-3">
+                            <a class="nav-link" @click.prevent="settings">
                                 <i class="fa fa-gear fa-lg"></i> <span class="hidden-xs-down">Settings</span>
-                            </router-link>
-                        </li> -->
+                            </a>
+                        </li>  
                     </ul>
                 </div>
             </div>
@@ -65,6 +65,9 @@ export default {
         },
         filters() {
             $("#spellFiltersModal").modal()
+        },
+        settings() {
+            $("#settingsModal").modal()
         }
     }
 }

@@ -1,32 +1,27 @@
 <template>
-  <div class="mx-1">
+  <div class="px-1 table-responsive">
     <table id="spellList" class="table table-striped">
       <thead class="table-inverse">
         <tr>
-          <th>
-            <div class="row">
-              <div class="col-5">Name</div>
-              <div class="col-3">Class</div>
-              <div class="col">Level</div>
-              <div class="col"></div>
-            </div>
-          </th>
+          <th>Name</th>
+          <th>Level</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
-      
+  
         <spellListItem v-for="(spell, index) in spells" :key="index" :spell="spell"></spellListItem>
-
+  
         <tr v-if="spells.length === 0">
-          <td class="text-center">
+          <td class="text-center" colspan="3">
             <h4>No Spells found :(</h4>
           </td>
         </tr>
-
+  
       </tbody>
     </table>
-
-    <SpellFiltersModal></SpellFiltersModal>
+  
+    <spellFiltersModal></spellFiltersModal>
     <spellDetailsModal></spellDetailsModal>
   </div>
 </template>
@@ -52,6 +47,9 @@ export default {
           return this.$store.getters.filteredSpells
           break;
       }
+    },
+    spellsPerPage: function () {
+      return this.$store.getters.settings.user.spellsPerPage
     }
   },
   beforeRouteEnter (to, from, next) {
@@ -64,6 +62,6 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-  
+<style>
+
 </style>

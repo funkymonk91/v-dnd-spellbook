@@ -1,18 +1,18 @@
 <template>
   <tr :class="{ 'table-success': bookmarked }">
     <td>
-      <div class="row">
-        <div class="col-5">
-          <h4>{{ spell.name }}</h4>
-        </div>
-        <div class="col-3">{{ spell.class }}</div>
-        <div class="col">{{ spell.level }}</div>
-        <div class="col text-center">
-          <button class="btn btn-primary d-inline-block" @click="showSpellDetailsModal(spell)"><i class="fa fa-info fa-lg"></i></button>
-
-           <addBookmarkButton :spell="spell"></addBookmarkButton> 
-        </div>
-      </div>
+      <h5>{{ spell.name }}</h5>
+      <small class="text-muted">
+        <em>{{ spell.class }}</em>
+      </small>
+    </td>
+    <td>{{ spell.level }}</td>
+    <td class="text-center">
+      <button class="btn btn-primary d-inline-block" @click="showSpellDetailsModal(spell)">
+        <i class="fa fa-info fa-lg"></i>
+      </button>
+  
+      <addBookmarkButton :spell="spell" v-if="showAddBookmarkButton"></addBookmarkButton>
     </td>
   </tr>
 </template>
@@ -28,6 +28,9 @@ export default {
   computed: {
     bookmarked: function () {
       return this.$store.getters.isSpellBookmarked(this.spell)
+    },
+    showAddBookmarkButton: function () {
+      return (this.$route.path === '/spells')
     }
   },
   methods: {
@@ -39,8 +42,6 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-  h4 {
-    display: inline-block;
-  }
+<style scoped>
+
 </style>

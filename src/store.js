@@ -26,7 +26,7 @@ export default new Vuex.Store({
         duration: '',
         level: '',
         range: '',
-        schoo: ''
+        school: ''
       },
       user: {
         castTime: '',
@@ -36,7 +36,7 @@ export default new Vuex.Store({
         duration: '',
         level: '',
         range: '',
-        schoo: ''
+        school: ''
       }
     },
     spells: spells,
@@ -84,7 +84,7 @@ export default new Vuex.Store({
       return state.spells.length
     },
     spells(state) {
-      return state.filteredSpells
+      return state.spells
     },
     filteredSpells(state) {
       return state.filteredSpells
@@ -134,6 +134,9 @@ export default new Vuex.Store({
     },
     isSpellBookmarked: (state) => (spell) => {
       return (state.currentCharacter.spellBook.indexOf(spell.name) !== -1) ? true : false
+    },
+    filters(state) {
+      return state.filters
     }
   },
   mutations: {
@@ -145,20 +148,54 @@ export default new Vuex.Store({
     },
     searchSpells(state, query) {
       state.searchQuery = query.toLowerCase()
+      var tempSpells = state.spells
+      var returnSpells = []
+      if (state.filters.user.castTime !== "") {
+        tempSpells = _.filter(tempSpells, function (o) { return o.casting_time === state.filters.user.castTime})
+      }
+
+      if (state.filters.user.class !== "") {
+        tempSpells = _.filter(tempSpells, function (o) { return o.class.indexOf(state.filters.user.class) > -1 })
+      }
+
+      if (state.filters.user.components !== "") {
+        tempSpells = _.filter(tempSpells, function (o) { return o.components.indexOf(state.filters.user.components) > -1 })
+      }
+
+      if (state.filters.user.concentration !== "") {
+        tempSpells = _.filter(tempSpells, function (o) { return o.concentration === state.filters.user.concentration})
+      }
+
+      if (state.filters.user.duration !== "") {
+        tempSpells = _.filter(tempSpells, function (o) { return o.duration === state.filters.user.duration})
+      }
+
+      if (state.filters.user.level !== "") {
+        tempSpells = _.filter(tempSpells, function (o) { return o.level === state.filters.user.level})
+      }
+
+      if (state.filters.user.range !== "") {
+        tempSpells = _.filter(tempSpells, function (o) { return o.range === state.filters.user.range})
+      }
+
+      if (state.filters.user.school !== "") {
+        tempSpells = _.filter(tempSpells, function (o) { return o.school === state.filters.user.school})
+      }
+      
       if (state.searchQuery !== '') {
-        var tempFilteredSpells = []
         // Loop through all the spells
-        _.forEach(state.spells, function (spell, i) {
+        _.forEach(tempSpells, function (spell, i) {
           // debugger
           // Spell props that we are comparing against
           if (spell.name.toLowerCase().indexOf(state.searchQuery) !== -1 || spell.level.indexOf(state.searchQuery) !== -1 || spell.school.toLowerCase().indexOf(state.searchQuery) !== -1 || spell.class.toLowerCase().indexOf(state.searchQuery) !== -1) {
-            tempFilteredSpells.push(spell)
+            returnSpells.push(spell)
           }
         });
-        state.filteredSpells = _.sortBy(tempFilteredSpells, ['level_sort', 'name'])
-      } else {
-        state.filteredSpells = state.spells
       }
+      else {
+        returnSpells = tempSpells
+      }
+      state.filteredSpells = _.sortBy(returnSpells, ['level_sort', 'name'])
     },
     addBookmark(state, spell) {
       state.currentCharacter.spellBook.push(spell.name)
@@ -206,6 +243,7 @@ export default new Vuex.Store({
           }
         }
       }
+      
       localStorage.setItem('characters', JSON.stringify(state.characters))
     },
     createCharacter(state) {
@@ -265,6 +303,18 @@ export default new Vuex.Store({
         prepared: []
       }
       localStorage.removeItem('currentCharacter')
+    },
+    clearFilters(state) {
+      state.filters.user = {
+        castTime: "",
+        class: "",
+        components: "",
+        concentration: "",
+        duration: "",
+        level: "",
+        range: "",
+        school: ""
+      }
     }
   },
   actions: {
@@ -306,6 +356,9 @@ export default new Vuex.Store({
     },
     clearCharacter(context) {
       context.commit('clearCharacter')
+    },
+    clearFilters(context) {
+      context.commit('clearFilters')
     }
   }
 })
