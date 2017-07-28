@@ -12,16 +12,16 @@
                 <div class="modal-body">
                     <div class="container-fluid">
                         <form>
-                            <!-- <div class="form-group">
+                             <div class="form-group">
                                 <label for="">Spells Per Page</label>
                                 <small class="text-muted pl-1">Default: {{ settings.default.spellsPerPage }}</small>
                                 <select name="" id="" v-model.number="settings.user.spellsPerPage" class="form-control">
                                     <option>25</option>
                                     <option>50</option>
                                     <option>100</option>
-                                    <option :value="spellCount">All</option>
+                                    <option>All</option>
                                 </select>
-                            </div> -->
+                            </div> 
     
                             <button class="btn btn-danger pull-right" @click.prevent="deleteData">Delete Local Data</button>
                         </form>

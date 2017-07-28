@@ -8,7 +8,7 @@
     </td>
     <td>{{ spell.level }}</td>
     <td class="text-center">
-      <button class="btn btn-primary d-inline-block" @click="showSpellDetailsModal(spell)">
+      <button class="btn btn-primary" @click="showSpellDetailsModal(spell)">
         <i class="fa fa-info fa-lg"></i>
       </button>
   
