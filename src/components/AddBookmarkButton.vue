@@ -3,27 +3,27 @@
 </template>
 <script>
     export default {
-    props: ['spell'],
-    computed: {
-        showButton: function () {
-            return this.$store.state.currentCharacter.id !== ''
-        },
-        bookmarked: function () {
-            return this.$store.getters.isSpellBookmarked(this.spell)
-        }
-    },
-    methods: {
-        bookmarkSpell(spell) {
-            // If this isnt bookmarked (default)
-            if (!this.bookmarked) {
-                this.$store.dispatch('addBookmark', spell)
+        props: ['spell'],
+        computed: {
+            showButton: function () {
+                return this.$store.state.currentCharacter.id !== ''
+            },
+            bookmarked: function () {
+                return this.$store.getters.isSpellBookmarked(this.spell)
             }
-            else {
-                this.$store.dispatch('removeBookmark', spell)
+        },
+        methods: {
+            bookmarkSpell (spell) {
+                // If this isnt bookmarked (default)
+                if (!this.bookmarked) {
+                    this.$store.dispatch ('addBookmark', spell)
+                }
+                else {
+                    this.$store.dispatch ('removeBookmark', spell)
+                }
             }
         }
     }
-}
 </script>
 <style>
 

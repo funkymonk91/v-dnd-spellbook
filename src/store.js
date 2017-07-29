@@ -74,50 +74,50 @@ export default new Vuex.Store({
     }
   },
   getters: {
-    settings(state) {
+    settings (state) {
       return state.settings
     },
-    searchQuery(state) {
+    searchQuery (state) {
       return state.searchQuery
     },
-    spellCount(state) {
+    spellCount (state) {
       return state.spells.length
     },
-    spells(state) {
+    spells (state) {
       return state.spells
     },
-    filteredSpells(state) {
+    filteredSpells (state) {
       return state.filteredSpells
     },
-    bookmarks(state) {
+    bookmarks (state) {
       return state.bookmarks
     },
-    bookmarkedSpells(state) {
+    bookmarkedSpells (state) {
       var spells = []
-      
+
       _.forEach(state.spells, function (spell, i) {
         // If the current character is NOT set and the spell is in the global bookmarks OR the current character IS set and the spell is in the current characters spellbook
-        if ((state.currentCharacter.id === '' && state.bookmarks.indexOf(spell.name) > -1) 
-          || (state.currentCharacter.id !== '' && state.currentCharacter.spellBook.indexOf(spell.name) > -1)) {
+        if ((state.currentCharacter.id === '' && state.bookmarks.indexOf(spell.name) > -1) ||
+          (state.currentCharacter.id !== '' && state.currentCharacter.spellBook.indexOf(spell.name) > -1)) {
           spells.push(spell)
         }
       })
-      
+
       return spells
     },
-    currentCharacter(state) {
+    currentCharacter (state) {
       return state.currentCharacter
     },
     characterById: (state) => (characterId) => {
       return state.characters.find(character => character.id === characterId)
     },
-    characters(state) {
+    characters (state) {
       return state.characters
     },
-    characterClasses(state) {
+    characterClasses (state) {
       return state.characterClasses
     },
-    characterRaces(state) {
+    characterRaces (state) {
       return state.characterRaces
     },
     characterRaceSpellStat: (state) => (selectedClass) => {
@@ -129,59 +129,59 @@ export default new Vuex.Store({
 
       return ''
     },
-    selectedSpell(state) {
+    selectedSpell (state) {
       return state.selectedSpell
     },
     isSpellBookmarked: (state) => (spell) => {
-      return (state.currentCharacter.spellBook.indexOf(spell.name) !== -1) ? true : false
+      return (state.currentCharacter.spellBook.indexOf(spell.name) !== -1)
     },
-    filters(state) {
+    filters (state) {
       return state.filters
     }
   },
   mutations: {
-    saveSettings(state) {
+    saveSettings (state) {
       localStorage.setItem('settings', JSON.stringify(state.settings.user))
     },
-    clearSearch(state) {
+    clearSearch (state) {
       state.searchQuery = ''
     },
-    searchSpells(state, query) {
+    searchSpells (state, query) {
       state.searchQuery = query.toLowerCase()
       var tempSpells = state.spells
       var returnSpells = []
-      if (state.filters.user.castTime !== "") {
-        tempSpells = _.filter(tempSpells, function (o) { return o.casting_time === state.filters.user.castTime})
+      if (state.filters.user.castTime !== '') {
+        tempSpells = _.filter(tempSpells, function (o) { return o.casting_time === state.filters.user.castTime })
       }
 
-      if (state.filters.user.class !== "") {
+      if (state.filters.user.class !== '') {
         tempSpells = _.filter(tempSpells, function (o) { return o.class.indexOf(state.filters.user.class) > -1 })
       }
 
-      if (state.filters.user.components !== "") {
+      if (state.filters.user.components !== '') {
         tempSpells = _.filter(tempSpells, function (o) { return o.components.indexOf(state.filters.user.components) > -1 })
       }
 
-      if (state.filters.user.concentration !== "") {
-        tempSpells = _.filter(tempSpells, function (o) { return o.concentration === state.filters.user.concentration})
+      if (state.filters.user.concentration !== '') {
+        tempSpells = _.filter(tempSpells, function (o) { return o.concentration === state.filters.user.concentration })
       }
 
-      if (state.filters.user.duration !== "") {
-        tempSpells = _.filter(tempSpells, function (o) { return o.duration === state.filters.user.duration})
+      if (state.filters.user.duration !== '') {
+        tempSpells = _.filter(tempSpells, function (o) { return o.duration === state.filters.user.duration })
       }
 
-      if (state.filters.user.level !== "") {
-        tempSpells = _.filter(tempSpells, function (o) { return o.level === state.filters.user.level})
+      if (state.filters.user.level !== '') {
+        tempSpells = _.filter(tempSpells, function (o) { return o.level === state.filters.user.level })
       }
 
-      if (state.filters.user.range !== "") {
-        tempSpells = _.filter(tempSpells, function (o) { return o.range === state.filters.user.range})
+      if (state.filters.user.range !== '') {
+        tempSpells = _.filter(tempSpells, function (o) { return o.range === state.filters.user.range })
       }
 
-      if (state.filters.user.school !== "") {
-        tempSpells = _.filter(tempSpells, function (o) { return o.school === state.filters.user.school})
+      if (state.filters.user.school !== '') {
+        tempSpells = _.filter(tempSpells, function (o) { return o.school === state.filters.user.school })
       }
-      
+
       if (state.searchQuery !== '') {
         // Loop through all the spells
         _.forEach(tempSpells, function (spell, i) {
@@ -190,27 +190,26 @@ export default new Vuex.Store({
           if (spell.name.toLowerCase().indexOf(state.searchQuery) !== -1 || spell.level.indexOf(state.searchQuery) !== -1 || spell.school.toLowerCase().indexOf(state.searchQuery) !== -1 || spell.class.toLowerCase().indexOf(state.searchQuery) !== -1) {
             returnSpells.push(spell)
           }
-        });
-      }
-      else {
+        })
+      } else {
         returnSpells = tempSpells
       }
       state.filteredSpells = _.sortBy(returnSpells, ['level_sort', 'name'])
     },
-    addBookmark(state, spell) {
+    addBookmark (state, spell) {
       state.currentCharacter.spellBook.push(spell.name)
       localStorage.setItem('characters', JSON.stringify(state.characters))
     },
-    removeBookmark(state, spell) {
+    removeBookmark (state, spell) {
       const index = state.currentCharacter.spellBook.indexOf(spell.name)
       state.currentCharacter.spellBook.splice(index, 1)
       localStorage.setItem('characters', JSON.stringify(state.characters))
     },
-    filterCharacterSpells(state) {
+    filterCharacterSpells (state) {
       var tempFilteredSpells = []
       // Loop through all the spells
       for (var i = 0; i < state.spells.length; i++) {
-        var spell = state.spells[i];
+        var spell = state.spells[i]
 
         if (state.currentCharacter.spellBook.indexOf(spell.name) !== -1) {
           tempFilteredSpells.push(spell)
@@ -219,16 +218,17 @@ export default new Vuex.Store({
 
       state.filteredSpells = tempFilteredSpells
     },
-    saveCharacter(state, characterId) {
-      //https://stackoverflow.com/questions/1349404/generate-random-string-characters-in-javascript
-      function generateId() {
-        var text = "";
-        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    saveCharacter (state, characterId) {
+      //  https://stackoverflow.com/questions/1349404/generate-random-string-characters-in-javascript
+      function generateId () {
+        var text = ''
+        var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
 
-        for (var i = 0; i < 16; i++)
+        for (var i = 0; i < 16; i++) {
           text += possible.charAt(Math.floor(Math.random() * possible.length))
+        }
 
-        return text;
+        return text
       }
 
       // If it is a brand new character
@@ -243,10 +243,10 @@ export default new Vuex.Store({
           }
         }
       }
-      
+
       localStorage.setItem('characters', JSON.stringify(state.characters))
     },
-    createCharacter(state) {
+    createCharacter (state) {
       state.currentCharacter = {
         id: '',
         name: '',
@@ -259,11 +259,11 @@ export default new Vuex.Store({
         prepared: []
       }
     },
-    setCurrentCharacter(state, character) {
+    setCurrentCharacter (state, character) {
       state.currentCharacter = character
       localStorage.setItem('currentCharacter', JSON.stringify(state.currentCharacter))
     },
-    deleteCharacter(state, characterId) {
+    deleteCharacter (state, characterId) {
       for (var i = 0; i < state.characters.length; i++) {
         if (characterId === state.characters[i].id) {
           state.characters.splice(i, 1)
@@ -287,11 +287,11 @@ export default new Vuex.Store({
 
       localStorage.setItem('characters', JSON.stringify(state.characters))
     },
-    selectSpell(state, spell) {
+    selectSpell (state, spell) {
       state.selectedSpell = spell
     },
-    clearCharacter(state) {
-      state.currentCharacter =  {
+    clearCharacter (state) {
+      state.currentCharacter = {
         id: '',
         name: '',
         race: '',
@@ -304,60 +304,60 @@ export default new Vuex.Store({
       }
       localStorage.removeItem('currentCharacter')
     },
-    clearFilters(state) {
+    clearFilters (state) {
       state.filters.user = {
-        castTime: "",
-        class: "",
-        components: "",
-        concentration: "",
-        duration: "",
-        level: "",
-        range: "",
-        school: ""
+        castTime: '',
+        class: '',
+        components: '',
+        concentration: '',
+        duration: '',
+        level: '',
+        range: '',
+        school: ''
       }
     }
   },
   actions: {
-    saveSettings(context) {
+    saveSettings (context) {
       context.commit('saveSettings')
     },
-    clearSearch(context) {
+    clearSearch (context) {
       context.commit('clearSearch')
     },
-    searchSpells(context, query) {
+    searchSpells (context, query) {
       context.commit('searchSpells', query)
     },
-    addBookmark(context, spell) {
+    addBookmark (context, spell) {
       context.commit('addBookmark', spell)
     },
-    removeBookmark(context, spell) {
+    removeBookmark (context, spell) {
       context.commit('removeBookmark', spell)
     },
-    filterBookmarkedSpells(context) {
+    filterBookmarkedSpells (context) {
       context.commit('filterBookmarkedSpells')
     },
-    filterCharacterSpells(context) {
+    filterCharacterSpells (context) {
       context.commit('filterCharacterSpells')
     },
-    saveCharacter(context, characterId) {
+    saveCharacter (context, characterId) {
       context.commit('saveCharacter', characterId)
     },
-    createCharacter(context) {
+    createCharacter (context) {
       context.commit('createCharacter')
     },
-    setCurrentCharacter(context, character) {
+    setCurrentCharacter (context, character) {
       context.commit('setCurrentCharacter', character)
     },
-    deleteCharacter(context, characterId) {
+    deleteCharacter (context, characterId) {
       context.commit('deleteCharacter', characterId)
     },
-    selectSpell(context, spell) {
+    selectSpell (context, spell) {
       context.commit('selectSpell', spell)
     },
-    clearCharacter(context) {
+    clearCharacter (context) {
       context.commit('clearCharacter')
     },
-    clearFilters(context) {
+    clearFilters (context) {
       context.commit('clearFilters')
     }
   }

@@ -21,24 +21,24 @@
 import AddBookmarkButton from './AddBookmarkButton'
 
 export default {
-  props: ['spell'],
-  components: {
-    AddBookmarkButton
-  },
-  computed: {
-    bookmarked: function () {
-      return this.$store.getters.isSpellBookmarked(this.spell)
+    props: ['spell'],
+    components: {
+        AddBookmarkButton
     },
-    showAddBookmarkButton: function () {
-      return (this.$route.path === '/spells')
+    computed: {
+        bookmarked: function () {
+            return this.$store.getters.isSpellBookmarked(this.spell)
+        },
+        showAddBookmarkButton: function () {
+            return (this.$route.path === '/spells')
+        }
+    },
+    methods: {
+        showSpellDetailsModal(spell) {
+            this.$store.dispatch('selectSpell', spell)
+            $('#spellDetailsModal').modal()
+        }
     }
-  },
-  methods: {
-    showSpellDetailsModal (spell) {
-      this.$store.dispatch('selectSpell', spell)
-      $("#spellDetailsModal").modal()
-    }
-  }
 }
 </script>
 
