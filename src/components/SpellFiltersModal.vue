@@ -1,164 +1,100 @@
 <template>
-  <div id="spellFiltersModal" class="modal fade">
-    <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header bg-success text-white">
-          <h5 class="modal-title">
-            <i class="fa fa-filter"></i> Filters
-          </h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body px-0">
-          <div class="container">
-            <form action="">
-              <div class="row">
-  
-                <!-- CLASS  -->
-                <div class="px-2 col-6 col-lg-4">
-                  <div class="form-group mb-2">
-                    <label for="">Class:</label>
-                    <select class="form-control" v-model="filters.class" @change="saveFilters">
-                      <option value="" selected></option>
-                      <option v-for="(item, index) in classes" :key="index">{{ item.name }}</option>
-                      <option value="Ritual Caster">Ritual Caster</option>
-                    </select>
-                  </div>
-                </div>
-  
-                <!-- SPELL LEVEL  -->
-                <div class="px-2 col-6 col-lg-4">
-                  <div class="form-group mb-2">
-                    <label for="">Level:</label>
-                    <select class="form-control" v-model="filters.level" @change="saveFilters">
-                      <option value="" selected></option>
-                      <option v-for="(item, index) in spellLevels" :key="index" :value="item">{{ item }}</option>
-                    </select>
-                  </div>
-                </div>
-  
-                <!-- SPELL SCHOOL  -->
-                <div class="px-2 col-6 col-lg-4">
-                  <div class="form-group mb-2">
-                    <label for="">School:</label>
-                    <select class="form-control" v-model="filters.school" @change="saveFilters">
-                      <option value="" selected></option>
-                      <option v-for="(item, index) in schools" :key="index" :value="item">{{ item }}</option>
-                    </select>
-                  </div>
-                </div>
-  
-                <!-- COMPONENTS  -->
-                <div class="px-2 col-6 col-lg-4">
-                  <div class="form-group mb-2">
-                    <label for="">Components:</label>
-                    <select class="form-control" v-model="filters.components" @change="saveFilters">
-                      <option value="" selected></option>
-                      <option v-for="(item, index) in components" :key="index" :value="item">{{ item }}</option>
-                    </select>
-                  </div>
-                </div>
-  
-                <!-- CONCENTRATION  -->
-                <div class="px-2 col-6 col-lg-4">
-                  <div class="form-group mb-2">
-                    <label for="">Concentration:</label>
-                    <select class="form-control" v-model="filters.concentration" @change="saveFilters">
-                      <option value="" selected></option>
-                      <option v-for="(item, index) in concentrations" :key="index" :value="item">{{ item }}</option>
-                    </select>
-                  </div>
-                </div>
-  
-                <!-- DURATION  -->
-                <div class="px-2 col-6 col-lg-4">
-                  <div class="form-group mb-2">
-                    <label for="">Duration:</label>
-                    <select class="form-control" v-model="filters.duration" @change="saveFilters">
-                      <option value="" selected></option>
-                      <option v-for="(item, index) in durations" :key="index" :value="item">{{ item }}</option>
-                    </select>
-                  </div>
-                </div>
-  
-                <!-- RANGE  -->
-                <div class="px-2 col-6 col-lg-4">
-                  <div class="form-group mb-2">
-                    <label for="">Range:</label>
-                    <select class="form-control" v-model="filters.range" @change="saveFilters">
-                      <option value="" selected></option>
-                      <option v-for="(item, index) in ranges" :key="index" :value="item">{{ item }}</option>
-                    </select>
-                  </div>
-                </div>
-  
-                <!-- CAST TIME  -->
-                <div class="px-2 col-6 col-lg-4">
-                  <div class="form-group mb-2">
-                    <label for="">Cast Time:</label>
-                    <select class="form-control" v-model="filters.castTime" @change="saveFilters">
-                      <option value="" selected></option>
-                      <option v-for="(item, index) in castTimes" :key="index" :value="item">{{ item }}</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <!-- /.row -->
-            </form>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-primary" @click="clearFilters">Clear Filters</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
+  <v-dialog v-model="showFilters" persistent>
+    <v-card>
+      <v-card-title>
+        <span class="headline">Filters</span>
+      </v-card-title>
+      <v-card-text>
+        <v-layout row>
+          <v-flex xs6>
+            <v-select label="Class" :items="filterClasses" v-model="filters.class" @change="saveFilters"></v-select>
+          </v-flex>
+          <v-flex xs6>
+            <v-select label="Level" :items="filterSpellLevels" v-model="filters.level" @change="saveFilters"></v-select>
+          </v-flex>
+        </v-layout>
+
+        <v-layout row>
+          <v-flex xs6>
+            <v-select label="School" :items="filterSchools" v-model="filters.school" @change="saveFilters"></v-select>
+          </v-flex>
+          <v-flex xs6>
+            <v-select label="Components" :items="filterComponents" v-model="filters.components" @change="saveFilters"></v-select>
+          </v-flex>
+        </v-layout>
+
+        <v-layout row>
+          <v-flex xs6>
+            <v-select label="Concentration" :items="filterConcentrations" v-model="filters.concentration" @change="saveFilters"></v-select>
+          </v-flex>
+          <v-flex xs6>
+            <v-select label="Duration" :items="filterDurations" v-model="filters.duration" @change="saveFilters"></v-select>
+          </v-flex>
+        </v-layout>
+
+        <v-layout row>
+          <v-flex xs6>
+            <v-select label="Range" :items="filterRanges" v-model="filters.range" @change="saveFilters"></v-select>
+          </v-flex>
+          <v-flex xs6>
+            <v-select label="Cast Time" :items="filterCastTimes" v-model="filters.castTime" @change="saveFilters"></v-select>
+          </v-flex>
+        </v-layout>
+      </v-card-text>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn flat class="blue--text darken-1" @click="clearFilters">Clear</v-btn>
+        <v-btn flat class="blue--text darken-1" @click="close">Save</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
 </template>
 
 
 <script>
 export default {
+  props: [ 'showFilters', 'searchQuery' ],
   computed: {
-    classes: function () {
-      return this.$store.getters.characterClasses
+    filterClasses: function () {
+      var classes = this.$store.getters.characterClassNames
+      classes.push('Ritual Caster')
+      return classes
     },
-    spellLevels: function () {
+    filterSpellLevels: function () {
       var results = _.map(_.uniqBy(this.$store.getters.spells, 'level_sort'), function (item) {
         return item.level
       });
 
       return results
     },
-    castTimes: function () {
+    filterCastTimes: function () {
       var results = _.map(_.uniqBy(this.$store.getters.spells, 'casting_time'), function (item) {
         return item.casting_time
       });
 
       return results.sort()
     },
-    components: function () {
+    filterComponents: function () {
       return ['V', 'S', 'M']
     },
-    concentrations: function () {
+    filterConcentrations: function () {
       return ['Yes', 'No']
     },
-    durations: function () {
+    filterDurations: function () {
       var results = _.map(_.uniqBy(this.$store.getters.spells, 'duration'), function (item) {
         return item.duration
       });
 
       return results.sort()
     },
-    ranges: function () {
+    filterRanges: function () {
       var results = _.map(_.uniqBy(this.$store.getters.spells, 'range'), function (item) {
         return item.range
       });
 
       return results.sort()
     },
-    schools: function () {
+    filterSchools: function () {
       var results = _.map(_.uniqBy(this.$store.getters.spells, 'school'), function (item) {
         return item.school
       });
@@ -171,17 +107,18 @@ export default {
   },
   methods: {
     saveFilters: _.debounce(function () {
-      this.$store.dispatch('searchSpells', this.$store.getters.searchQuery)
+      this.$store.dispatch('searchSpells', this.searchQuery)
     }, 300),
     clearFilters() {
       this.$store.dispatch('clearFilters')
-      this.$store.dispatch('searchSpells', this.$store.getters.searchQuery)
+      this.$store.dispatch('searchSpells', this.searchQuery)
+    },
+    close: function () {
+      this.$emit('closeFilterModal')
     }
   }
 }
 </script>
 <style scoped>
-  label {
-    padding-right:10px;
-  }
+
 </style>

@@ -1,9 +1,9 @@
 <template>
-    <button v-if="showButton" class="btn d-inline-block" :class="{'btn-success': !bookmarked, 'btn-danger': bookmarked}" @click="bookmarkSpell(spell)"><i class="fa" :class="{'fa-bookmark fa-lg': !bookmarked, 'fa-star': bookmarked}"></i></button>
+    <v-btn raised fab dark :small="small" v-if="showButton" class="btn d-inline-block" :class="{'green': !bookmarked, 'red darken-4': bookmarked}" @click="bookmarkSpell(spell)"><i class="fa" :class="{'fa-bookmark fa-lg': !bookmarked, 'fa-star': bookmarked}"></i></v-btn raised>
 </template>
 <script>
     export default {
-        props: ['spell'],
+        props: ['spell', 'small'],
         computed: {
             showButton: function () {
                 return this.$store.state.currentCharacter.id !== ''

@@ -57,7 +57,6 @@ export default new Vuex.Store({
       school: '',
       class: ''
     },
-    searchQuery: '',
     characterClasses: characterClasses,
     characterRaces: characterRaces,
     characters: [],
@@ -77,9 +76,6 @@ export default new Vuex.Store({
     settings (state) {
       return state.settings
     },
-    searchQuery (state) {
-      return state.searchQuery
-    },
     spellCount (state) {
       return state.spells.length
     },
@@ -88,22 +84,6 @@ export default new Vuex.Store({
     },
     filteredSpells (state) {
       return state.filteredSpells
-    },
-    bookmarks (state) {
-      return state.bookmarks
-    },
-    bookmarkedSpells (state) {
-      var spells = []
-
-      _.forEach(state.spells, function (spell, i) {
-        // If the current character is NOT set and the spell is in the global bookmarks OR the current character IS set and the spell is in the current characters spellbook
-        if ((state.currentCharacter.id === '' && state.bookmarks.indexOf(spell.name) > -1) ||
-          (state.currentCharacter.id !== '' && state.currentCharacter.spellBook.indexOf(spell.name) > -1)) {
-          spells.push(spell)
-        }
-      })
-
-      return spells
     },
     currentCharacter (state) {
       return state.currentCharacter
@@ -116,6 +96,15 @@ export default new Vuex.Store({
     },
     characterClasses (state) {
       return state.characterClasses
+    },
+    characterClassNames (state) {
+      var names = []
+
+      _.forEach(state.characterClasses, function(value, key) {
+        names.push(value.name)
+      })
+
+      return names
     },
     characterRaces (state) {
       return state.characterRaces
@@ -137,17 +126,29 @@ export default new Vuex.Store({
     },
     filters (state) {
       return state.filters
-    }
+    },
+    spellComponentColor: (state) => (component) => {
+      switch (component.trim()) {
+        case 'V':
+          return 'indigo'
+          break;
+        case 'S':
+          return 'teal'
+          break;
+        case 'M':
+          return 'pink'
+          break;
+        default:
+          break;
+      }
+    } 
   },
   mutations: {
     saveSettings (state) {
       localStorage.setItem('settings', JSON.stringify(state.settings.user))
     },
-    clearSearch (state) {
-      state.searchQuery = ''
-    },
     searchSpells (state, query) {
-      state.searchQuery = query.toLowerCase()
+      query = query.toLowerCase()
       var tempSpells = state.spells
       var returnSpells = []
       if (state.filters.user.castTime !== '') {
@@ -182,12 +183,12 @@ export default new Vuex.Store({
         tempSpells = _.filter(tempSpells, function (o) { return o.school === state.filters.user.school })
       }
 
-      if (state.searchQuery !== '') {
+      if (query !== '') {
         // Loop through all the spells
         _.forEach(tempSpells, function (spell, i) {
           // debugger
           // Spell props that we are comparing against
-          if (spell.name.toLowerCase().indexOf(state.searchQuery) !== -1 || spell.level.indexOf(state.searchQuery) !== -1 || spell.school.toLowerCase().indexOf(state.searchQuery) !== -1 || spell.class.toLowerCase().indexOf(state.searchQuery) !== -1) {
+          if (spell.name.toLowerCase().indexOf(query) !== -1 || spell.level.indexOf(query) !== -1 || spell.school.toLowerCase().indexOf(query) !== -1 || spell.class.toLowerCase().indexOf(query) !== -1) {
             returnSpells.push(spell)
           }
         })
@@ -325,7 +326,10 @@ export default new Vuex.Store({
       context.commit('clearSearch')
     },
     searchSpells (context, query) {
-      context.commit('searchSpells', query)
+      return new Promise((resolve, reject) => {
+        context.commit('searchSpells', query)
+        resolve()
+      })
     },
     addBookmark (context, spell) {
       context.commit('addBookmark', spell)
