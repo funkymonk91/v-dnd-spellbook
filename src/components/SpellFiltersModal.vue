@@ -58,7 +58,7 @@ export default {
     filterClasses: function () {
       var classes = this.$store.getters.characterClassNames
       classes.push('Ritual Caster')
-      return classes
+      return classes.sort()
     },
     filterSpellLevels: function () {
       var results = _.map(_.uniqBy(this.$store.getters.spells, 'level_sort'), function (item) {

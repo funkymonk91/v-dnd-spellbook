@@ -67,6 +67,7 @@ export default new Vuex.Store({
       subRace: '',
       class: '',
       classLevel: '',
+      notes: '',
       spellCastingScore: 0,
       spellBook: [],
       prepared: []
@@ -84,6 +85,17 @@ export default new Vuex.Store({
     },
     filteredSpells (state) {
       return state.filteredSpells
+    },
+    bookmarkedSpells (state) {
+      var spells = []
+
+      _.forEach(state.spells, function (spell, i) {
+        if (state.currentCharacter.spellBook.indexOf(spell.name) > -1) {
+          spells.push(spell)
+        }
+      })
+
+      return spells
     },
     currentCharacter (state) {
       return state.currentCharacter
@@ -255,6 +267,7 @@ export default new Vuex.Store({
         subRace: '',
         class: '',
         classLevel: '',
+        notes: '',
         spellCastingScore: 0,
         spellBook: [],
         prepared: []

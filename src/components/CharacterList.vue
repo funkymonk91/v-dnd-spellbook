@@ -12,17 +12,15 @@
                         <v-list-tile-sub-title>{{ character.class }} {{ character.level }}</v-list-tile-sub-title>
                     </v-list-tile-content>
                     <v-list-tile-action>
-                        <v-btn icon>
-                            <v-icon v-if="character.id === currentCharacter.id">radio_button_checked</v-icon>
-                            <v-icon v-else>radio_button_checked</v-icon>
+                        <v-btn icon @click.stop="setCurrentCharacter(character)">
+                            <v-icon v-if="character.id === currentCharacter.id" class="teal--text">radio_button_checked</v-icon>
+                            <v-icon v-else>radio_button_unchecked</v-icon>
                         </v-btn>
                     </v-list-tile-action>
                 </v-list-tile>
                 <v-divider inset :key="index"></v-divider>
             </template>
         </v-list>
-
-
 
         <v-btn dark fab class="pink" style="position: fixed; bottom: 50px; right: 20px;" @click="createCharacter">
             <v-icon>add</v-icon>
@@ -55,6 +53,6 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
 </style>

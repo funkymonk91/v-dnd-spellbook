@@ -17,20 +17,22 @@
         <v-divider v-if="currentCharacter.id !== ''"></v-divider>
 
         <router-link to="/characters">
-          <v-list-tile>
+          <v-list-tile ripple>
             Characters
           </v-list-tile>
         </router-link>
 
         <router-link to="/spells">
-          <v-list-tile>
+          <v-list-tile ripple>
             Spell List
           </v-list-tile>
         </router-link>
 
-        <v-list-tile>
-          Settings
-        </v-list-tile>
+        <router-link to="/settings">
+          <v-list-tile ripple>
+            Settings
+          </v-list-tile>
+        </router-link>
       </v-list>
     </v-navigation-drawer>
 
@@ -49,7 +51,7 @@
       <!-- RIGHT SIDE  -->
       <v-progress-circular v-if="searching" indeterminate indeterminate class="white--text"></v-progress-circular>
 
-      <v-btn icon @click.stop="showFilters = true">
+      <v-btn icon v-if="$route.path === '/spellbook' || $route.path === '/spells'" @click.stop="showFilters = true">
         <v-icon>filter_list</v-icon>
       </v-btn>
 
@@ -78,13 +80,11 @@
 
 <script>
 import _ from 'lodash'
-import Navbar from './components/Navbar'
 import SpellFiltersModal from './components/SpellFiltersModal'
 
 export default {
   name: 'app',
   components: {
-    Navbar,
     SpellFiltersModal
   },
   data () {

@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 import SpellList from './components/SpellList'
 import CharacterList from './components/CharacterList'
 import CharacterForm from './components/CharacterForm'
+import SettingsForm from './components/SettingsForm'
 
 Vue.use(VueRouter)
 
@@ -12,6 +13,7 @@ export default new VueRouter({
     routes: [
         { path: '/', component: CharacterList },
         { path: '/characters', component: CharacterList },
+        { path: '/settings', component: SettingsForm },
         { path: '/spellbook', component: SpellList },
         { path: '/spells', component: SpellList },
         { path: '/characterForm', component: CharacterForm },

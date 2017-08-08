@@ -1,6 +1,6 @@
 <template>
   <div>
-  
+
     <div class="text-xs-center" v-if="spells.length > 0 && spellsPerPage !== 'All'">
       <v-pagination :length="numberOfPages" v-model="currentPage"></v-pagination>
     </div>
@@ -13,12 +13,12 @@
             <v-list-tile-title>{{ spell.name }}</v-list-tile-title>
           </v-list-tile-content>
 
-          <v-list-tile-action>
+          <v-list-tile-action v-if="$route.path === '/spells'">
             <v-btn icon @click.stop="removeSpellFromSpellBook(spell)" v-if="isSpellBookmarked(spell)">
               <v-icon class='teal--text'>bookmark</v-icon>
             </v-btn>
 
-            <v-btn icon @click.stop="addSpellToSpellBook(spell)" v-else>
+            <v-btn icon @click.stop="addSpellToSpellBook(spell)" v-else-if="characterSelected">
               <v-icon class='grey--text'>bookmark</v-icon>
             </v-btn>
 
@@ -104,7 +104,7 @@ export default {
   computed: {
     spells: function () {
       switch(this.$route.path) {
-        case '/spellbook': 
+        case '/spellbook':
           return this.$store.getters.bookmarkedSpells
           break;
         default:
